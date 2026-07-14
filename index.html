@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pensar Popayán · Demo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F2C200'/%3E%3Ctext x='16' y='23' font-family='Arial,Helvetica,sans-serif' font-weight='800' font-size='20' fill='%2326221B' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #EFE3BD; font-family: 'Plus Jakarta Sans', -apple-system, 'Segoe UI', sans-serif; }
+  .stage { min-height: 100dvh; display: flex; justify-content: center; }
+  .phone { width: 100%; max-width: 440px; min-height: 100dvh; background: #FFFCF0; display: flex; flex-direction: column; box-shadow: 0 0 60px rgba(38,34,27,0.18); position: relative; }
+  section { flex: 1; display: none; flex-direction: column; }
+  section.active { display: flex; }
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea { font-family: inherit; }
+
+  /* generic bits */
+  .chip { font-size: 13px; font-weight: 700; color: #2B2620; background: #FCEFB8; border-radius: 999px; padding: 6px 13px; }
+  .chip-fase { font-size: 13px; font-weight: 700; color: #fff; border-radius: 999px; padding: 6px 13px; white-space: nowrap; }
+  .chip-fase.concepto { background: #26221B; }
+  .chip-fase.icfes { background: #A67C00; }
+  .card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 1px 3px rgba(38,34,27,0.06); }
+  .btn-primary { background: #A67C00; color: #fff; border: none; border-radius: 12px; padding: 16px; font-size: 15px; font-weight: 700; box-shadow: 0 6px 16px rgba(166,124,0,0.3); transition: background 0.15s; }
+  .btn-primary:hover { background: #8F6B00; }
+  .btn-outline { border: 1.5px solid #E4CD7A; background: none; color: #2B2620; border-radius: 12px; padding: 15px; font-size: 15px; font-weight: 700; }
+  .btn-ghost { background: none; border: none; color: #2B2620; font-size: 14px; font-weight: 700; padding: 8px; }
+
+  /* LOGIN */
+  #screen-login { padding: 64px 28px 36px; background: linear-gradient(180deg, #FFFCF0 0%, #FBF2D2 100%); }
+  .login-head { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .login-head img { width: 220px; border-radius: 14px; }
+  .login-head div { font-size: 15px; color: #6B6350; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 13px; font-weight: 600; color: #3E382B; }
+  .field input { background: #fff; border: 1.5px solid #E6DBB4; border-radius: 12px; padding: 15px 16px; font-size: 16px; color: #26221B; outline: none; width: 100%; }
+  .field input:focus { border-color: #A67C00; }
+
+  /* HOME */
+  .home-header { background: #2B2620; padding: 52px 24px 26px; display: flex; flex-direction: column; gap: 18px; }
+  .quiz-card-row { background: #fff; border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 3px rgba(38,34,27,0.06); }
+  .area-badge { width: 42px; height: 42px; border-radius: 11px; background: #FCEFB8; color: #2B2620; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; flex-shrink: 0; }
+
+  /* QUIZ options */
+  .opt { background: #fff; border: 2px solid #EDE3C2; border-radius: 13px; padding: 13px 15px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: all 0.15s; }
+  .opt .letter { width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 1.5px solid #E6DBB4; color: #94896E; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .opt .txt { font-size: 14px; color: #26221B; line-height: 1.4; }
+  .opt.sel { background: #FDF4C9; border-color: #A67C00; }
+  .opt.sel .letter { background: #A67C00; border-color: #A67C00; color: #fff; }
+  .opt.sel .txt { font-weight: 600; }
+
+  /* TEACHER */
+  .t-field label { font-size: 13px; font-weight: 700; color: #3E382B; }
+  .t-field label span { font-weight: 500; color: #94896E; }
+  .t-field textarea { background: #fff; border: 1.5px solid #E6DBB4; border-radius: 12px; padding: 13px 14px; font-size: 14px; color: #26221B; line-height: 1.5; outline: none; resize: none; width: 100%; }
+  .t-field textarea:focus { border-color: #A67C00; }
+  .t-opt-row { display: flex; gap: 10px; align-items: center; }
+  .t-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; background: #fff; border: 1.5px solid #E6DBB4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .t-dot i { width: 10px; height: 10px; border-radius: 50%; background: transparent; }
+  .t-opt-row.correct .t-dot { background: #FDF4C9; border-color: #A67C00; }
+  .t-opt-row.correct .t-dot i { background: #A67C00; }
+  .t-opt-row input { flex: 1; background: #fff; border: 1.5px solid #E6DBB4; border-radius: 11px; padding: 12px 13px; font-size: 14px; color: #26221B; outline: none; min-width: 0; }
+  .t-opt-row.correct input { border-color: #E8C94E; }
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="phone">
+
+  <!-- ══════════ LOGIN ══════════ -->
+  <section id="screen-login" class="active">
+    <div class="login-head">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:8px;"><div style="width:86px; height:86px; border-radius:24px; background:#F2C200; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 28px rgba(166,124,0,0.35);"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#26221B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6.5 6.5 0 0 0-3.2 12.2c.7.4 1.2 1 1.2 1.8h4c0-.8.5-1.4 1.2-1.8A6.5 6.5 0 0 0 12 3z"/></svg></div><div style="font-size:27px; font-weight:800; letter-spacing:2px; color:#26221B; margin-top:4px;">PENSAR</div><div style="font-size:13px; font-weight:700; letter-spacing:5px; color:#8F6B00; margin-top:-6px;">POPAYÁN</div></div>
+      <div>Entrena para tu Saber 11</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 44px;">
+      <div class="field">
+        <label>Código de estudiante</label>
+        <input value="PP-2026-0187" id="login-code">
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" value="12345678" id="login-pass">
+      </div>
+      <button class="btn-primary" style="margin-top: 10px; font-size: 16px;" onclick="go('home')">Ingresar</button>
+      <div style="font-size: 13px; color: #94896E; text-align: center;">¿Olvidaste tu contraseña? Pídela en secretaría</div>
+    </div>
+    <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px; align-items: center; padding-top: 30px;">
+      <button onclick="go('teacher')" style="background: none; border: 1.5px solid #E4CD7A; color: #2B2620; border-radius: 999px; padding: 10px 20px; font-size: 13px; font-weight: 700;">Soy profesor · Crear una pregunta</button>
+      <a href="panel.html" style="font-size: 13px; font-weight: 700; color: #2B2620; text-decoration: none;">Ver panel del instituto (web) →</a>
+      <div style="font-size: 12px; color: #A8A08A;">Pensar Popayán · Demo</div>
+    </div>
+  </section>
+
+  <!-- ══════════ HOME ══════════ -->
+  <section id="screen-home">
+    <div class="home-header">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div style="font-size: 14px; color: #F5D45C;">Hola de nuevo</div>
+          <div style="font-size: 24px; font-weight: 800; color: #fff;">Valentina Muñoz</div>
+        </div>
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: #8F6B00; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px;">VM</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.12); border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div style="font-size: 12px; color: #F5D45C;">Último simulacro completo</div>
+          <div style="font-size: 20px; font-weight: 800; color: #fff;">312 <span style="font-size: 13px; font-weight: 500; color: #F5D45C;">/ 500 puntos</span></div>
+        </div>
+        <div style="font-size: 13px; font-weight: 700; color: #FCEFB8; background: rgba(255,255,255,0.14); border-radius: 999px; padding: 7px 14px;">+18 vs. anterior</div>
+      </div>
+    </div>
+    <div style="padding: 22px 24px 30px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+      <div style="font-size: 16px; font-weight: 700; color: #26221B;">Cuestionarios de esta semana</div>
+      <div style="background: #fff; border: 2px solid #A67C00; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 6px 20px rgba(166,124,0,0.12);">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div class="area-badge" style="font-size: 14px; width: 44px; height: 44px;">LC+MT</div>
+          <div style="flex: 1;">
+            <div style="font-size: 16px; font-weight: 700; color: #26221B;">Simulacro corto</div>
+            <div style="font-size: 13px; color: #94896E;">6 preguntas · 3 de concepto + 3 tipo ICFES</div>
+          </div>
+        </div>
+        <button class="btn-primary" style="padding: 15px;" onclick="startQuiz()">Empezar ahora</button>
+      </div>
+      <div class="quiz-card-row">
+        <div class="area-badge">CN</div>
+        <div style="flex: 1;">
+          <div style="font-size: 15px; font-weight: 700; color: #26221B;">Ciencias Naturales</div>
+          <div style="font-size: 13px; color: #94896E;">15 preguntas · 20 min</div>
+        </div>
+        <div style="font-size: 13px; font-weight: 700; color: #2B2620; border: 1.5px solid #E4CD7A; border-radius: 999px; padding: 7px 15px;">Pendiente</div>
+      </div>
+      <div class="quiz-card-row" style="background: #FFF; border: 1.5px dashed #E4CD7A; box-shadow: none;">
+        <div class="area-badge" style="background: #26221B; color: #fff; font-size: 13px;">S11</div>
+        <div style="flex: 1;">
+          <div style="font-size: 15px; font-weight: 700; color: #26221B;">Simulacro completo</div>
+          <div style="font-size: 13px; color: #94896E;">Sábado 11 jul · 8:00 a.m.</div>
+        </div>
+      </div>
+      <button onclick="go('login')" style="margin-top: auto; background: none; border: none; color: #94896E; font-size: 13px; font-weight: 600; padding: 8px;">Cerrar sesión</button>
+    </div>
+  </section>
+
+  <!-- ══════════ QUIZ ══════════ -->
+  <section id="screen-quiz" style="padding: 52px 24px 30px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+      <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+        <div class="chip" id="q-area">Lectura Crítica</div>
+        <div class="chip-fase concepto" id="q-tipo">Conceptual</div>
+      </div>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3E382B; background: #fff; border: 1px solid #EDE3C2; border-radius: 999px; padding: 6px 13px; flex-shrink: 0;" id="q-clock">12:00</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 7px; margin-top: 16px;">
+      <div style="display: flex; justify-content: space-between; font-size: 13px; color: #94896E;">
+        <span style="font-weight: 600; color: #3E382B;" id="q-num">Pregunta 1 de 6</span>
+        <span id="q-answered">0 respondidas</span>
+      </div>
+      <div style="height: 6px; border-radius: 999px; background: #EDE3C2;">
+        <div id="q-progress" style="width: 0%; height: 100%; border-radius: 999px; background: #A67C00; transition: width 0.3s;"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top: 18px; display: flex; flex-direction: column; gap: 12px;">
+      <div id="q-context" style="font-size: 14px; color: #6B6350; line-height: 1.55; font-style: italic; border-left: 3px solid #E4CD7A; padding-left: 12px;"></div>
+      <div id="q-text" style="font-size: 16px; font-weight: 700; color: #26221B; line-height: 1.45;"></div>
+    </div>
+    <div id="q-opts" style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;"></div>
+    <div style="display: flex; gap: 12px; margin-top: auto; padding-top: 18px;">
+      <button class="btn-outline" style="flex: 1;" id="q-prev" onclick="quizPrev()">Anterior</button>
+      <button class="btn-primary" style="flex: 2; padding: 15px;" id="q-next" onclick="quizNext()">Siguiente</button>
+    </div>
+  </section>
+
+  <!-- ══════════ RESULTS ══════════ -->
+  <section id="screen-results" style="padding: 52px 24px 30px;">
+    <div style="text-align: center;">
+      <div style="font-size: 14px; color: #94896E;">Simulacro corto · 6 preguntas</div>
+      <div style="font-size: 20px; font-weight: 800; color: #26221B; margin-top: 4px;" id="r-title"></div>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 24px;">
+      <div id="r-ring" style="width: 172px; height: 172px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+        <div style="width: 136px; height: 136px; border-radius: 50%; background: #FFFCF0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+          <div style="font-size: 40px; font-weight: 800; color: #26221B; line-height: 1;"><span id="r-correct-big">0</span><span style="font-size: 20px; color: #94896E; font-weight: 600;">/6</span></div>
+          <div style="font-size: 13px; font-weight: 700; color: #2B2620;"><span id="r-pct">0</span>% de aciertos</div>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 10px; margin-top: 24px;">
+      <div style="flex: 1; background: #fff; border-radius: 13px; padding: 14px; text-align: center; box-shadow: 0 1px 3px rgba(38,34,27,0.06);">
+        <div style="font-size: 22px; font-weight: 800; color: #2B2620;" id="r-correct">0</div>
+        <div style="font-size: 12px; color: #94896E;">Correctas</div>
+      </div>
+      <div style="flex: 1; background: #fff; border-radius: 13px; padding: 14px; text-align: center; box-shadow: 0 1px 3px rgba(38,34,27,0.06);">
+        <div style="font-size: 22px; font-weight: 800; color: #C24B3A;" id="r-wrong">0</div>
+        <div style="font-size: 12px; color: #94896E;">Incorrectas</div>
+      </div>
+      <div style="flex: 1; background: #fff; border-radius: 13px; padding: 14px; text-align: center; box-shadow: 0 1px 3px rgba(38,34,27,0.06);">
+        <div style="font-size: 22px; font-weight: 800; color: #26221B;" id="r-time">0:00</div>
+        <div style="font-size: 12px; color: #94896E;">Tiempo</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top: 16px; padding: 18px; display: flex; flex-direction: column; gap: 13px;">
+      <div style="font-size: 14px; font-weight: 700; color: #26221B;">Desempeño por área</div>
+      <div id="r-areas" style="display: flex; flex-direction: column; gap: 13px;"></div>
+    </div>
+    <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 18px;">
+      <button class="btn-primary" id="r-review-btn" onclick="startReview()">Revisar las preguntas falladas</button>
+      <button class="btn-ghost" onclick="go('home')">Volver al inicio</button>
+    </div>
+  </section>
+
+  <!-- ══════════ REVIEW ══════════ -->
+  <section id="screen-review" style="padding: 52px 24px 30px;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div class="chip" id="rv-area"></div>
+      <div style="font-size: 13px; color: #94896E; font-weight: 600;" id="rv-pos"></div>
+    </div>
+    <div class="card" style="margin-top: 16px;">
+      <div style="font-size: 13px; color: #94896E; margin-bottom: 6px;" id="rv-num"></div>
+      <div style="font-size: 16px; font-weight: 700; color: #26221B; line-height: 1.45;" id="rv-text"></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+      <div style="background: #FBEDEA; border: 1.5px solid #E0A79D; border-radius: 13px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #C24B3A; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;" id="rv-your-letter"></div>
+        <div>
+          <div style="font-size: 14px; color: #26221B; line-height: 1.4;" id="rv-your-text"></div>
+          <div style="font-size: 12px; font-weight: 700; color: #C24B3A; margin-top: 3px;">Tu respuesta · Incorrecta</div>
+        </div>
+      </div>
+      <div style="background: #FDF4C9; border: 1.5px solid #E8C94E; border-radius: 13px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #A67C00; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;" id="rv-correct-letter"></div>
+        <div>
+          <div style="font-size: 14px; color: #26221B; font-weight: 600; line-height: 1.4;" id="rv-correct-text"></div>
+          <div style="font-size: 12px; font-weight: 700; color: #2B2620; margin-top: 3px;">Respuesta correcta</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top: 14px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="width: 22px; height: 22px; border-radius: 50%; background: #2B2620; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800;">?</div>
+        <div style="font-size: 14px; font-weight: 800; color: #26221B;">¿Por qué?</div>
+      </div>
+      <div style="font-size: 14px; color: #3E382B; line-height: 1.6;" id="rv-exp"></div>
+      <div style="background: #FAF5DF; border-radius: 10px; padding: 12px 14px; font-size: 13px; color: #6B6350; line-height: 1.5;"><b style="color: #2B2620;">Tip Pensar: </b><span id="rv-tip"></span></div>
+    </div>
+    <div style="display: flex; gap: 12px; margin-top: auto; padding-top: 18px;">
+      <button class="btn-outline" style="flex: 1;" id="rv-prev" onclick="reviewPrev()">Anterior</button>
+      <button class="btn-primary" style="flex: 1.4; padding: 15px;" id="rv-next" onclick="reviewNext()">Siguiente fallada</button>
+    </div>
+  </section>
+
+  <!-- ══════════ TEACHER ══════════ -->
+  <section id="screen-teacher">
+    <div style="background: #26221B; padding: 52px 24px 20px;">
+      <div style="font-size: 13px; color: #A8A08A;">Panel del profesor · Banco de preguntas</div>
+      <div style="font-size: 22px; font-weight: 800; color: #fff; margin-top: 4px;">Nueva pregunta</div>
+    </div>
+    <div style="padding: 20px 24px 30px; display: flex; flex-direction: column; gap: 16px; flex: 1;">
+      <div class="t-field" style="display: flex; flex-direction: column; gap: 6px;">
+        <label>Enunciado</label>
+        <textarea id="t-enun" placeholder="Escribe la pregunta…" rows="3" oninput="teacherRefresh()"></textarea>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <label style="font-size: 13px; font-weight: 700; color: #3E382B;">Opciones <span style="font-weight: 500; color: #94896E;">· toca el círculo para marcar la correcta</span></label>
+        <div id="t-opts" style="display: flex; flex-direction: column; gap: 8px;"></div>
+      </div>
+      <div class="t-field" style="display: flex; flex-direction: column; gap: 6px;">
+        <label>Explicación <span>· la ve el estudiante cuando falla</span></label>
+        <textarea id="t-exp" placeholder="Explica por qué la respuesta correcta lo es…" rows="3" oninput="teacherRefresh()"></textarea>
+      </div>
+      <div id="t-toast" style="display: none; background: #FDF4C9; border: 1.5px solid #E8C94E; border-radius: 12px; padding: 13px 16px; font-size: 14px; font-weight: 700; color: #2B2620; text-align: center;"></div>
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 10px;">
+        <button class="btn-primary" id="t-save" onclick="teacherSave()">Guardar pregunta</button>
+        <a href="panel.html" style="text-align: center; font-size: 13px; font-weight: 700; color: #2B2620; text-decoration: none; padding: 4px;">Ver panel del instituto (web) →</a>
+        <button onclick="go('login')" style="background: none; border: none; color: #94896E; font-size: 13px; font-weight: 600; padding: 6px;">← Volver al ingreso</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<script>
+// ─── Banco de preguntas de la demo ───
+const BANK = [
+  // ─── Fase 1 · 3 preguntas conceptuales ───
+  {
+    area: 'Matemáticas',
+    tipo: 'Conceptual',
+    context: null,
+    text: 'Si 3x − 5 = 16, el valor de x² es',
+    opts: ['49', '36', '121', '64'],
+    correct: 0,
+    exp: 'Primero despeja x: 3x = 16 + 5 = 21, entonces x = 7. Luego eleva al cuadrado: x² = 7 × 7 = 49. El error común es elevar 21 o 6 al cuadrado por despejar mal.',
+    tip: 'Resuelve la ecuación por pasos y verifica reemplazando: 3(7) − 5 = 21 − 5 = 16 ✓',
+  },
+  {
+    area: 'Matemáticas',
+    tipo: 'Conceptual',
+    context: null,
+    text: 'Una chaqueta cuesta $150.000 y tiene un descuento del 30%. ¿Cuánto se paga por ella?',
+    opts: ['$105.000', '$120.000', '$45.000', '$110.000'],
+    correct: 0,
+    exp: 'El 30% de $150.000 es 0,30 × 150.000 = $45.000. Ese es el descuento, no el precio final. Lo que se paga es 150.000 − 45.000 = $105.000. La trampa clásica es marcar $45.000.',
+    tip: 'Atajo: pagar con 30% de descuento es pagar el 70%. 0,70 × 150.000 = 105.000.',
+  },
+  {
+    area: 'Matemáticas',
+    tipo: 'Conceptual',
+    context: null,
+    text: 'Se lanza un dado normal de seis caras. ¿Cuál es la probabilidad de obtener un número mayor que 4?',
+    opts: ['1/3', '1/2', '1/6', '2/3'],
+    correct: 0,
+    exp: 'Los números mayores que 4 son el 5 y el 6: dos casos favorables de seis posibles. La probabilidad es 2/6, que simplificada es 1/3. Ojo: «mayor que 4» no incluye el 4.',
+    tip: 'Probabilidad = casos favorables ÷ casos posibles. Enumera los casos antes de calcular.',
+  },
+  // ─── Fase 2 · preguntas tipo ICFES ───
+  {
+    area: 'Lectura Crítica',
+    tipo: 'Tipo ICFES',
+    context: '«La economía circular propone que los materiales no se desechen, sino que vuelvan al ciclo productivo una y otra vez, imitando los ciclos de la naturaleza, donde nada se pierde.»',
+    text: 'Según el texto, el propósito principal de la economía circular es',
+    opts: [
+      'aumentar la producción de bienes de consumo.',
+      'reincorporar los materiales al ciclo productivo para reducir desechos.',
+      'eliminar por completo la industria manufacturera.',
+      'reemplazar el dinero por el intercambio de materiales.',
+    ],
+    correct: 1,
+    exp: 'El texto define la economía circular como un modelo donde los materiales «vuelvan al ciclo productivo una y otra vez». La opción B recoge literalmente esa idea; las demás agregan información que el texto no dice.',
+    tip: 'En preguntas de propósito, busca la opción que repita la idea central del texto con otras palabras, sin agregar nada nuevo.',
+  },
+  {
+    area: 'Lectura Crítica',
+    tipo: 'Tipo ICFES',
+    context: '«El plástico, ese huésped incómodo de los océanos, tarda siglos en degradarse.»',
+    text: 'En el fragmento, la expresión «huésped incómodo» cumple la función de',
+    opts: [
+      'presentar el plástico como un visitante indeseado mediante una metáfora.',
+      'informar el tiempo exacto de degradación del plástico.',
+      'describir una especie marina que habita los océanos.',
+      'citar la opinión de un científico sobre el plástico.',
+    ],
+    correct: 0,
+    exp: 'Llamar «huésped incómodo» al plástico es una metáfora: le atribuye rasgos humanos (ser un visitante que molesta) para transmitir que está donde no debería. No es información literal ni una cita.',
+    tip: 'Cuando una expresión atribuye cualidades humanas o de otro objeto a algo, casi siempre es lenguaje figurado: metáfora o personificación.',
+  },
+  {
+    area: 'Lectura Crítica',
+    tipo: 'Tipo ICFES',
+    context: '«Es urgente cambiar nuestros hábitos: no podemos seguir tratando el planeta como un basurero infinito. La decisión está en tus manos.»',
+    text: 'Del fragmento puede inferirse que la intención principal del autor es',
+    opts: [
+      'persuadir al lector de cambiar sus hábitos de consumo.',
+      'narrar la historia del movimiento ambientalista.',
+      'describir un proceso industrial de forma neutral.',
+      'informar sobre estadísticas de reciclaje en Colombia.',
+    ],
+    correct: 0,
+    exp: 'El autor usa expresiones valorativas («es urgente», «no podemos seguir así») y cierra con un llamado directo al lector. Cuando un texto combina argumentos con apelaciones al receptor, su intención es persuadir, no solo informar.',
+    tip: 'Subraya los verbos en primera persona plural y los adjetivos de juicio; delatan la postura del autor.',
+  },
+];
+
+const LETTERS = 'ABCD';
+const state = {
+  qIndex: 0,
+  answers: BANK.map(() => null),
+  elapsed: 0,
+  finished: 0,
+  wrong: [],
+  reviewIdx: 0,
+  tCorrect: 0,
+  tSaved: 0,
+};
+
+// ─── Navegación entre pantallas ───
+function go(screen) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + screen).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function fmt(t) {
+  const m = Math.floor(t / 60), s = t % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+// ─── Cuestionario ───
+setInterval(() => {
+  if (document.getElementById('screen-quiz').classList.contains('active')) {
+    state.elapsed++;
+    document.getElementById('q-clock').textContent = fmt(Math.max(0, 720 - state.elapsed));
+  }
+}, 1000);
+
+function startQuiz() {
+  state.qIndex = 0;
+  state.elapsed = 0;
+  state.answers = BANK.map(() => null);
+  go('quiz');
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const q = BANK[state.qIndex];
+  const sel = state.answers[state.qIndex];
+  const answered = state.answers.filter(a => a != null).length;
+  const isLast = state.qIndex === BANK.length - 1;
+
+  document.getElementById('q-area').textContent = q.area;
+  const tipoEl = document.getElementById('q-tipo');
+  tipoEl.textContent = q.tipo;
+  tipoEl.className = 'chip-fase ' + (q.tipo === 'Conceptual' ? 'concepto' : 'icfes');
+  document.getElementById('q-num').textContent = 'Pregunta ' + (state.qIndex + 1) + ' de ' + BANK.length;
+  document.getElementById('q-answered').textContent = answered + ' respondidas';
+  document.getElementById('q-progress').style.width = Math.round(answered / BANK.length * 100) + '%';
+  document.getElementById('q-clock').textContent = fmt(Math.max(0, 720 - state.elapsed));
+
+  const ctx = document.getElementById('q-context');
+  ctx.style.display = q.context ? 'block' : 'none';
+  ctx.textContent = q.context || '';
+  document.getElementById('q-text').textContent = q.text;
+
+  const box = document.getElementById('q-opts');
+  box.innerHTML = '';
+  q.opts.forEach((txt, i) => {
+    const div = document.createElement('div');
+    div.className = 'opt' + (sel === i ? ' sel' : '');
+    div.innerHTML = '<div class="letter">' + LETTERS[i] + '</div><div class="txt"></div>';
+    div.querySelector('.txt').textContent = txt;
+    div.onclick = () => { state.answers[state.qIndex] = i; renderQuiz(); };
+    box.appendChild(div);
+  });
+
+  document.getElementById('q-prev').style.opacity = state.qIndex > 0 ? 1 : 0.4;
+  const next = document.getElementById('q-next');
+  next.textContent = isLast ? 'Terminar' : 'Siguiente';
+  next.style.opacity = sel != null ? 1 : 0.45;
+}
+
+function quizPrev() {
+  if (state.qIndex > 0) { state.qIndex--; renderQuiz(); }
+}
+
+function quizNext() {
+  if (state.answers[state.qIndex] == null) return;
+  if (state.qIndex === BANK.length - 1) {
+    state.finished = state.elapsed;
+    showResults();
+  } else {
+    state.qIndex++;
+    renderQuiz();
+  }
+}
+
+// ─── Resultados ───
+function showResults() {
+  const graded = BANK.map((q, i) => ({ q, idx: i, a: state.answers[i] }));
+  state.wrong = graded.filter(x => x.a !== x.q.correct);
+  const correct = BANK.length - state.wrong.length;
+  const pct = Math.round(correct / BANK.length * 100);
+  const G = '#A67C00', R = '#C24B3A';
+
+  document.getElementById('r-title').textContent =
+    pct === 100 ? '¡Impecable, Valentina!' : pct >= 60 ? '¡Buen trabajo, Valentina!' : 'Sigue practicando, Valentina';
+  document.getElementById('r-ring').style.background = 'conic-gradient(' + G + ' 0% ' + pct + '%, #EDE3C2 ' + pct + '% 100%)';
+  document.getElementById('r-correct-big').textContent = correct;
+  document.getElementById('r-pct').textContent = pct;
+  document.getElementById('r-correct').textContent = correct;
+  document.getElementById('r-wrong').textContent = state.wrong.length;
+  document.getElementById('r-time').textContent = fmt(state.finished);
+
+  const areas = document.getElementById('r-areas');
+  areas.innerHTML = '';
+  ['Matemáticas', 'Lectura Crítica'].forEach(name => {
+    const items = graded.filter(x => x.q.area === name);
+    const ok = items.filter(x => x.a === x.q.correct).length;
+    const p = items.length ? ok / items.length : 0;
+    const color = p >= 0.67 ? G : R;
+    const row = document.createElement('div');
+    row.style.cssText = 'display: flex; flex-direction: column; gap: 5px;';
+    row.innerHTML =
+      '<div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: #3E382B;">' + name + '</span><span style="font-weight: 700; color: ' + color + ';">' + ok + '/' + items.length + '</span></div>' +
+      '<div style="height: 6px; border-radius: 999px; background: #F1EAD2;"><div style="width: ' + Math.round(p * 100) + '%; height: 100%; border-radius: 999px; background: ' + color + ';"></div></div>';
+    areas.appendChild(row);
+  });
+
+  const btn = document.getElementById('r-review-btn');
+  if (state.wrong.length === 0) {
+    btn.style.display = 'none';
+  } else {
+    btn.style.display = 'block';
+    btn.textContent = state.wrong.length === 1 ? 'Revisar la pregunta fallada' : 'Revisar las ' + state.wrong.length + ' preguntas falladas';
+  }
+  go('results');
+}
+
+// ─── Revisión de falladas ───
+function startReview() {
+  state.reviewIdx = 0;
+  go('review');
+  renderReview();
+}
+
+function renderReview() {
+  const wrong = state.wrong;
+  const rv = wrong[state.reviewIdx];
+  const isLast = state.reviewIdx >= wrong.length - 1;
+
+  document.getElementById('rv-area').textContent = rv.q.area;
+  document.getElementById('rv-pos').textContent = 'Fallada ' + (state.reviewIdx + 1) + ' de ' + wrong.length;
+  document.getElementById('rv-num').textContent = 'Pregunta ' + (rv.idx + 1);
+  document.getElementById('rv-text').textContent = rv.q.text;
+  document.getElementById('rv-your-letter').textContent = LETTERS[rv.a];
+  document.getElementById('rv-your-text').textContent = rv.q.opts[rv.a];
+  document.getElementById('rv-correct-letter').textContent = LETTERS[rv.q.correct];
+  document.getElementById('rv-correct-text').textContent = rv.q.opts[rv.q.correct];
+  document.getElementById('rv-exp').textContent = rv.q.exp;
+  document.getElementById('rv-tip').textContent = rv.q.tip;
+  document.getElementById('rv-prev').style.opacity = state.reviewIdx > 0 ? 1 : 0.4;
+  document.getElementById('rv-next').textContent = isLast ? 'Volver a resultados' : 'Siguiente fallada';
+}
+
+function reviewPrev() {
+  if (state.reviewIdx > 0) { state.reviewIdx--; renderReview(); }
+}
+
+function reviewNext() {
+  if (state.reviewIdx >= state.wrong.length - 1) go('results');
+  else { state.reviewIdx++; renderReview(); }
+}
+
+// ─── Pantalla del profesor ───
+function buildTeacherOpts() {
+  const box = document.getElementById('t-opts');
+  box.innerHTML = '';
+  for (let i = 0; i < 4; i++) {
+    const row = document.createElement('div');
+    row.className = 't-opt-row' + (state.tCorrect === i ? ' correct' : '');
+    row.innerHTML = '<div class="t-dot"><i></i></div><input placeholder="Opción ' + LETTERS[i] + '">';
+    row.querySelector('.t-dot').onclick = () => {
+      state.tCorrect = i;
+      document.querySelectorAll('.t-opt-row').forEach((r, j) => r.classList.toggle('correct', j === i));
+      teacherRefresh();
+    };
+    row.querySelector('input').oninput = teacherRefresh;
+    box.appendChild(row);
+  }
+}
+
+function teacherReady() {
+  const enun = document.getElementById('t-enun').value.trim();
+  const exp = document.getElementById('t-exp').value.trim();
+  const opts = [...document.querySelectorAll('.t-opt-row input')].map(i => i.value.trim());
+  return enun && exp && opts.every(o => o);
+}
+
+function teacherRefresh() {
+  document.getElementById('t-save').style.opacity = teacherReady() ? 1 : 0.45;
+}
+
+let toastTimer;
+function teacherSave() {
+  if (!teacherReady()) return;
+  state.tSaved++;
+  document.getElementById('t-enun').value = '';
+  document.getElementById('t-exp').value = '';
+  document.querySelectorAll('.t-opt-row input').forEach(i => i.value = '');
+  state.tCorrect = 0;
+  document.querySelectorAll('.t-opt-row').forEach((r, j) => r.classList.toggle('correct', j === 0));
+  const toast = document.getElementById('t-toast');
+  toast.textContent = 'Pregunta guardada en el banco · ' + (state.tSaved === 1 ? '1 pregunta nueva' : state.tSaved + ' preguntas nuevas');
+  toast.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.style.display = 'none'; }, 3500);
+  teacherRefresh();
+}
+
+// Enter en los campos del login también ingresa
+['login-code', 'login-pass'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') go('home'); });
+});
+
+buildTeacherOpts();
+teacherRefresh();
+</script>
+</body>
+</html>
