@@ -16,10 +16,10 @@
 
   /* sidebar */
   .sidebar { width: 232px; background: #26221B; display: flex; flex-direction: column; padding: 22px 16px; gap: 4px; flex-shrink: 0; position: sticky; top: 0; height: 100dvh; }
-  .sidebar img { width: 150px; border-radius: 8px; margin: 0 4px 22px; }
   .nav-item { border: none; text-align: left; border-radius: 10px; padding: 11px 14px; font-size: 14px; color: #A8A08A; background: none; }
   .nav-item.active { font-weight: 700; color: #fff; background: #A67C00; }
   .nav-item:not(.active):hover { background: rgba(255,255,255,0.07); color: #fff; }
+  .nav-new { font-size: 10px; font-weight: 800; color: #26221B; background: #F2C200; border-radius: 999px; padding: 2px 7px; margin-left: 6px; vertical-align: 1px; }
 
   /* main */
   .main { flex: 1; padding: 28px 32px; display: none; flex-direction: column; gap: 22px; min-width: 0; }
@@ -43,6 +43,7 @@
   .btn-primary { background: #A67C00; color: #fff; border: none; border-radius: 10px; padding: 10px 18px; font-size: 14px; font-weight: 700; }
   .btn-primary:hover { background: #8F6B00; }
   .btn-outline { border: 1.5px solid #E4CD7A; background: none; color: #2B2620; border-radius: 10px; padding: 10px 18px; font-size: 14px; font-weight: 700; }
+  .btn-ghost { background: none; border: none; color: #94896E; font-size: 13px; font-weight: 700; padding: 8px; }
 
   /* form */
   .f-label { font-size: 13px; font-weight: 700; color: #3E382B; }
@@ -63,10 +64,33 @@
   .pv-opt { border: 1.5px solid #EDE3C2; border-radius: 11px; padding: 10px 13px; font-size: 13px; color: #3E382B; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .pv-opt b { color: #94896E; }
 
+  /* torre de selección */
+  .torre-banner { background: #FDF4C9; border: 1.5px solid #E8C94E; border-radius: 14px; padding: 15px 18px; display: flex; gap: 13px; align-items: center; }
+  .torre-badge { width: 44px; height: 44px; border-radius: 12px; background: #A67C00; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; flex-shrink: 0; }
+  .dist-row { display: flex; flex-direction: column; gap: 5px; cursor: pointer; }
+  .dist-bar { height: 8px; border-radius: 999px; background: #F1EAD2; }
+  .dist-bar div { height: 100%; border-radius: 999px; background: #E4CD7A; transition: background 0.15s; }
+  .dist-row.sel .dist-bar div { background: #A67C00; }
+  .dist-row.sel .dist-name { font-weight: 800; }
+
+  /* cargar con IA */
+  .ia-drop { background: #fff; border: 2px dashed #E4CD7A; border-radius: 18px; padding: 44px 24px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .ia-file { background: #FAF5DF; border-radius: 12px; padding: 13px 16px; display: flex; gap: 12px; align-items: center; }
+  .ia-step { display: flex; gap: 11px; align-items: center; font-size: 14px; color: #94896E; padding: 7px 0; }
+  .ia-step .ia-dot { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #E6DBB4; background: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; transition: all 0.2s; }
+  .ia-step.doing { color: #2B2620; font-weight: 600; }
+  .ia-step.doing .ia-dot { border-color: #A67C00; background: #FDF4C9; }
+  .ia-step.done { color: #2B2620; }
+  .ia-step.done .ia-dot { background: #A67C00; border-color: #A67C00; }
+  .ia-q { background: #fff; border: 1.5px solid #EDE3C2; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 9px; }
+  .ia-q-opt { font-size: 13px; color: #3E382B; padding: 7px 11px; border: 1.5px solid #F1EAD2; border-radius: 9px; }
+  .ia-q-opt.ok { background: #FDF4C9; border-color: #A67C00; font-weight: 600; }
+  .ia-q-opt b { color: #94896E; }
+  .ia-q-opt.ok b { color: #8F6B00; }
+
   @media (max-width: 900px) {
     .layout { flex-direction: column; }
     .sidebar { width: 100%; height: auto; position: static; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 2px; padding: 14px 16px; }
-    .sidebar img { width: 110px; margin: 0 10px 0 0; }
     .nav-item { padding: 9px 12px; font-size: 13px; }
     .sidebar .profile { display: none; }
     .main { padding: 20px 16px; }
@@ -75,6 +99,8 @@
     .banco-grid .preview-col { width: 100% !important; }
     .table-scroll { overflow-x: auto; }
     .table-inner { min-width: 640px; }
+    .ia-grid { flex-direction: column; }
+    .ia-grid .ia-side { width: 100% !important; }
   }
 </style>
 </head>
@@ -86,6 +112,7 @@
     <div style="display:flex; align-items:center; gap:10px; padding:6px 10px 14px;"><div style="width:38px; height:38px; border-radius:11px; background:#F2C200; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#26221B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6.5 6.5 0 0 0-3.2 12.2c.7.4 1.2 1 1.2 1.8h4c0-.8.5-1.4 1.2-1.8A6.5 6.5 0 0 0 12 3z"/></svg></div><div><div style="font-size:15px; font-weight:800; letter-spacing:1px; color:#fff;">PENSAR</div><div style="font-size:10px; font-weight:700; letter-spacing:3px; color:#F5D45C; margin-top:-2px;">POPAYÁN</div></div></div>
     <button class="nav-item active" id="nav-resultados" onclick="show('resultados')">Resultados</button>
     <button class="nav-item" id="nav-banco" onclick="show('banco')">Banco de preguntas</button>
+    <button class="nav-item" id="nav-ia" onclick="show('ia')">Cargar con IA<span class="nav-new">NUEVO</span></button>
     <button class="nav-item" id="nav-cuestionarios" onclick="show('cuestionarios')">Cuestionarios</button>
     <button class="nav-item" id="nav-estudiantes" onclick="show('estudiantes')">Estudiantes</button>
     <button class="nav-item" id="nav-simulacros" onclick="show('simulacros')">Simulacros</button>
@@ -104,7 +131,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
       <div>
         <div style="font-size: 22px; font-weight: 800; color: #26221B;">Grupo Sabatino 2026-B</div>
-        <div style="font-size: 14px; color: #94896E; margin-top: 3px;">42 estudiantes · Cuestionario: Lectura Crítica · 4 de julio</div>
+        <div style="font-size: 14px; color: #94896E; margin-top: 3px;">42 estudiantes · Lectura Crítica (36 preguntas) · Prof. Diana Ordóñez · 4 de julio</div>
       </div>
       <div style="display: flex; gap: 10px;">
         <button class="btn-outline" onclick="demoToast('El informe PDF estará disponible en la versión completa')">Exportar informe</button>
@@ -124,7 +151,7 @@
         <div style="font-size: 12px; color: #94896E;">4 pendientes</div>
       </div>
       <div class="stat">
-        <div style="font-size: 13px; color: #94896E;">Tema más débil</div>
+        <div style="font-size: 13px; color: #94896E;">Competencia más débil</div>
         <div style="font-size: 17px; font-weight: 800; color: #C24B3A; line-height: 1.3;">Reflexionar y evaluar</div>
         <div style="font-size: 12px; color: #94896E;">52% de aciertos</div>
       </div>
@@ -141,19 +168,19 @@
           <div>ESTUDIANTE</div><div>ACIERTOS</div><div>TIEMPO</div><div>TENDENCIA</div><div>REFUERZO SUGERIDO</div>
         </div>
         <div class="row">
-          <div style="font-weight: 600;">Valentina Muñoz</div><div style="font-weight: 800; color: #2B2620;">16/20</div><div>17:05</div><div style="color: #2B2620; font-weight: 700;">▲ mejorando</div><div style="color: #94896E; font-size: 13px;">Evaluación de contenido</div>
+          <div style="font-weight: 600;">Valentina Muñoz</div><div style="font-weight: 800; color: #2B2620;">29/36</div><div>41:05</div><div style="color: #2B2620; font-weight: 700;">▲ mejorando</div><div style="color: #94896E; font-size: 13px;">Reflexionar y evaluar</div>
         </div>
         <div class="row">
-          <div style="font-weight: 600;">Andrés Gómez</div><div style="font-weight: 800; color: #2B2620;">15/20</div><div>19:40</div><div style="color: #94896E; font-weight: 700;">— estable</div><div style="color: #94896E; font-size: 13px;">Estructura del texto</div>
+          <div style="font-weight: 600;">Andrés Gómez</div><div style="font-weight: 800; color: #2B2620;">27/36</div><div>47:40</div><div style="color: #94896E; font-weight: 700;">— estable</div><div style="color: #94896E; font-size: 13px;">Estructura del texto</div>
         </div>
         <div class="row">
-          <div style="font-weight: 600;">Sara Imbachí</div><div style="font-weight: 800; color: #C24B3A;">9/20</div><div>24:58</div><div style="color: #C24B3A; font-weight: 700;">▼ en riesgo</div><div style="color: #94896E; font-size: 13px;">Información literal</div>
+          <div style="font-weight: 600;">Sara Imbachí</div><div style="font-weight: 800; color: #C24B3A;">16/36</div><div>58:22</div><div style="color: #C24B3A; font-weight: 700;">▼ en riesgo</div><div style="color: #94896E; font-size: 13px;">Información literal</div>
         </div>
         <div class="row">
-          <div style="font-weight: 600;">Juan David Paz</div><div style="font-weight: 800; color: #2B2620;">14/20</div><div>16:12</div><div style="color: #2B2620; font-weight: 700;">▲ mejorando</div><div style="color: #94896E; font-size: 13px;">Evaluación de contenido</div>
+          <div style="font-weight: 600;">Juan David Paz</div><div style="font-weight: 800; color: #2B2620;">25/36</div><div>39:12</div><div style="color: #2B2620; font-weight: 700;">▲ mejorando</div><div style="color: #94896E; font-size: 13px;">Reflexionar y evaluar</div>
         </div>
         <div class="row">
-          <div style="font-weight: 600;">Laura Cerón</div><div style="font-weight: 800; color: #26221B;">12/20</div><div>21:33</div><div style="color: #94896E; font-weight: 700;">— estable</div><div style="color: #94896E; font-size: 13px;">Intención del autor</div>
+          <div style="font-weight: 600;">Laura Cerón</div><div style="font-weight: 800; color: #26221B;">22/36</div><div>51:33</div><div style="color: #94896E; font-weight: 700;">— estable</div><div style="color: #94896E; font-size: 13px;">Intención del autor</div>
         </div>
       </div>
     </div>
@@ -161,24 +188,44 @@
 
   <!-- ══════════ VISTA: BANCO DE PREGUNTAS ══════════ -->
   <div class="main" id="view-banco">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div>
+        <div style="font-size: 22px; font-weight: 800; color: #26221B;">Banco de preguntas</div>
+        <div style="font-size: 14px; color: #94896E; margin-top: 3px;">Lote 2026-B · vigente julio–diciembre · próxima renovación: enero 2027</div>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <div style="text-align: right;">
+          <div style="font-size: 22px; font-weight: 800; color: #26221B;" id="banco-total">600</div>
+          <div style="font-size: 12px; color: #94896E;">preguntas en el banco</div>
+        </div>
+        <button class="btn-primary" onclick="show('ia')">Cargar con IA</button>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <label class="f-label" for="torre-select">Estás viendo como:</label>
+        <select class="f-select" id="torre-select" style="width: 320px;" onchange="setTorre(this.value)"></select>
+      </div>
+      <div class="torre-banner">
+        <div class="torre-badge" id="torre-sigla">LC</div>
+        <div style="font-size: 14px; color: #2B2620; line-height: 1.45;">
+          <b id="torre-titulo">Torre de Lectura Crítica · Prof. Diana Ordóñez</b><br>
+          <span id="torre-detalle" style="color: #6B6350; font-size: 13px;">104 preguntas en tu torre · cuestionarios de 36 preguntas</span>
+          <span style="color: #94896E; font-size: 13px;"> — cada profesor edita únicamente el banco de su materia.</span>
+        </div>
+      </div>
+    </div>
+
     <div class="banco-grid" style="display: flex; gap: 26px; align-items: flex-start;">
 
       <!-- formulario -->
       <div style="flex: 1.15; display: flex; flex-direction: column; gap: 16px; min-width: 0;">
-        <div>
-          <div style="font-size: 22px; font-weight: 800; color: #26221B;">Nueva pregunta</div>
-          <div style="font-size: 14px; color: #94896E; margin-top: 3px;">Banco de preguntas · Lectura Crítica</div>
-        </div>
+        <div style="font-size: 15px; font-weight: 800; color: #26221B;">Nueva pregunta</div>
         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
           <div style="flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 6px;">
-            <label class="f-label">Área</label>
-            <select class="f-select" id="b-area" onchange="preview()">
-              <option>Lectura Crítica</option>
-              <option>Matemáticas</option>
-              <option>Sociales y Ciudadanas</option>
-              <option>Ciencias Naturales</option>
-              <option>Inglés</option>
-            </select>
+            <label class="f-label">Área <span>· asignada a tu torre</span></label>
+            <input class="f-input" id="b-area" value="Lectura Crítica" readonly style="background: #FAF5DF; color: #6B6350;">
           </div>
           <div style="flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 6px;">
             <label class="f-label">Competencia</label>
@@ -186,7 +233,7 @@
               <option>Reflexionar y evaluar</option>
               <option>Información literal</option>
               <option>Estructura del texto</option>
-              <option>Evaluación de contenido</option>
+              <option>Intención del autor</option>
             </select>
           </div>
           <div style="width: 130px; display: flex; flex-direction: column; gap: 6px;">
@@ -197,6 +244,10 @@
               <option>Alta</option>
             </select>
           </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label class="f-label">Contexto <span>· el texto, la situación o la figura que acompaña la pregunta</span></label>
+          <textarea class="f-textarea" id="b-ctx" rows="3">Es urgente cambiar nuestros hábitos: no podemos seguir tratando el planeta como un basurero infinito. La decisión está en tus manos.</textarea>
         </div>
         <div style="display: flex; flex-direction: column; gap: 6px;">
           <label class="f-label">Enunciado</label>
@@ -228,6 +279,101 @@
       </div>
 
     </div>
+
+    <div style="background: #fff; border-radius: 16px; padding: 20px 22px; box-shadow: 0 1px 3px rgba(38,34,27,0.06); display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <div style="font-size: 14px; font-weight: 700; color: #26221B;">Distribución del banco por torre</div>
+        <div style="font-size: 12px; color: #94896E;">600 preguntas · lote 2026-B</div>
+      </div>
+      <div id="dist-rows" style="display: flex; flex-direction: column; gap: 12px;"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ VISTA: CARGAR CON IA ══════════ -->
+  <div class="main" id="view-ia">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div>
+        <div style="font-size: 22px; font-weight: 800; color: #26221B;">Cargar cuestionario con IA</div>
+        <div style="font-size: 14px; color: #94896E; margin-top: 3px;">Convierte tus cuadernillos en preguntas digitales, listas para revisar y publicar</div>
+      </div>
+    </div>
+
+    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+      <div class="stat">
+        <div style="font-size: 13px; color: #94896E;">Lote vigente</div>
+        <div style="font-size: 26px; font-weight: 800; color: #26221B;">600<span style="font-size: 15px; color: #94896E; font-weight: 600;"> preguntas</span></div>
+        <div style="font-size: 12px; color: #94896E;">2026-B · julio a diciembre</div>
+      </div>
+      <div class="stat">
+        <div style="font-size: 13px; color: #94896E;">Próxima renovación</div>
+        <div style="font-size: 26px; font-weight: 800; color: #26221B;">Enero 2027</div>
+        <div style="font-size: 12px; color: #94896E;">los cuadernillos se envían con un mes de antelación</div>
+      </div>
+      <div class="stat">
+        <div style="font-size: 13px; color: #94896E;">Control de calidad</div>
+        <div style="font-size: 17px; font-weight: 800; color: #26221B; line-height: 1.3; margin-top: 6px;">Revisión pedagógica</div>
+        <div style="font-size: 12px; color: #94896E;">cada lote se revisa antes de publicarse</div>
+      </div>
+    </div>
+
+    <div class="ia-grid" style="display: flex; gap: 26px; align-items: flex-start;">
+      <div style="flex: 1.3; min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+
+        <!-- paso 1: subir -->
+        <div class="ia-drop" id="ia-drop">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#A67C00" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+          <div style="font-size: 16px; font-weight: 700; color: #26221B;">Arrastra tu cuadernillo aquí</div>
+          <div style="font-size: 13px; color: #94896E;">PDF o Word · hasta 200 preguntas por archivo</div>
+          <button class="btn-primary" style="margin-top: 6px; padding: 12px 22px;" onclick="iaStart()">Seleccionar archivo</button>
+        </div>
+
+        <!-- paso 2: procesando -->
+        <div id="ia-processing" style="display: none; background: #fff; border-radius: 16px; padding: 22px; box-shadow: 0 1px 3px rgba(38,34,27,0.06); flex-direction: column; gap: 16px;">
+          <div class="ia-file">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8F6B00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: #26221B;">Cuadernillo_LC_2026-2.pdf</div>
+              <div style="font-size: 12px; color: #94896E;">48 páginas · 24 preguntas detectadas</div>
+            </div>
+          </div>
+          <div style="height: 8px; border-radius: 999px; background: #F1EAD2;">
+            <div id="ia-bar" style="width: 0%; height: 100%; border-radius: 999px; background: #A67C00; transition: width 1.4s linear;"></div>
+          </div>
+          <div id="ia-steps" style="display: flex; flex-direction: column;"></div>
+        </div>
+
+        <!-- paso 3: resultado -->
+        <div id="ia-result" style="display: none; flex-direction: column; gap: 14px;">
+          <div style="background: #FDF4C9; border: 1.5px solid #E8C94E; border-radius: 14px; padding: 16px 18px; display: flex; gap: 12px; align-items: center;">
+            <div style="width: 34px; height: 34px; border-radius: 50%; background: #A67C00; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; flex-shrink: 0;">✓</div>
+            <div>
+              <div style="font-size: 15px; font-weight: 800; color: #26221B;">24 preguntas generadas · listas para tu revisión</div>
+              <div style="font-size: 13px; color: #6B6350;">La IA identificó enunciados, opciones, respuestas correctas y generó explicaciones. Revisa antes de publicar.</div>
+            </div>
+          </div>
+          <div id="ia-previews" style="display: flex; flex-direction: column; gap: 12px;"></div>
+          <div style="font-size: 13px; color: #94896E; text-align: center;">… y 21 preguntas más</div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn-primary" style="flex: 2; padding: 13px;" onclick="iaApprove()">Aprobar las 24 y agregarlas al banco</button>
+            <button class="btn-outline" style="flex: 1; padding: 12px;" onclick="demoToast('La revisión pregunta por pregunta estará disponible en la versión completa')">Revisar una por una</button>
+          </div>
+          <button class="btn-ghost" onclick="iaReset()">← Cargar otro cuadernillo</button>
+        </div>
+
+      </div>
+
+      <div class="ia-side" style="width: 340px; flex-shrink: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="background: #26221B; border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-size: 12px; font-weight: 700; color: #E8C94E; letter-spacing: 1px;">DINÁMICA CIRCULAR</div>
+          <div style="font-size: 15px; font-weight: 700; color: #fff; line-height: 1.4;">El banco completo se renueva cada 6 meses</div>
+          <div style="font-size: 13px; color: #A8A08A; line-height: 1.55;">El instituto envía sus cuadernillos con antelación, la IA los convierte en preguntas digitales y el equipo pedagógico revisa cada lote. Las 600 preguntas del semestre entran renovadas, sin digitación manual.</div>
+        </div>
+        <div style="background: #fff; border-radius: 16px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(38,34,27,0.06); display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-size: 13px; font-weight: 700; color: #26221B;">Lo que la IA extrae de cada pregunta</div>
+          <div style="font-size: 13px; color: #6B6350; line-height: 1.8;">✓ Texto o situación de contexto<br>✓ Enunciado y las 4 opciones<br>✓ Respuesta correcta<br>✓ Explicación pedagógica<br>✓ Competencia y dificultad sugeridas</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ══════════ VISTA: CUESTIONARIOS ══════════ -->
@@ -235,7 +381,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
       <div>
         <div style="font-size: 22px; font-weight: 800; color: #26221B;">Cuestionarios</div>
-        <div style="font-size: 14px; color: #94896E; margin-top: 3px;">Semana 3 · Julio 2026 · Todos los grupos</div>
+        <div style="font-size: 14px; color: #94896E; margin-top: 3px;">Semana 3 · Julio 2026 · las 7 materias</div>
       </div>
       <button class="btn-primary" onclick="show('banco')">Nuevo cuestionario</button>
     </div>
@@ -258,36 +404,36 @@
       </div>
       <div class="stat">
         <div style="font-size: 13px; color: #94896E;">Preguntas en el banco</div>
-        <div style="font-size: 26px; font-weight: 800; color: #26221B;">486</div>
-        <div style="font-size: 12px; color: #94896E;">32 nuevas este mes</div>
+        <div style="font-size: 26px; font-weight: 800; color: #26221B;">600</div>
+        <div style="font-size: 12px; color: #94896E;">lote 2026-B · renueva en enero</div>
       </div>
     </div>
 
     <div class="table-scroll" style="background: #fff; border-radius: 16px; box-shadow: 0 1px 3px rgba(38,34,27,0.06); overflow: hidden;">
       <div class="table-inner">
         <div class="trow cols-cuest thead">
-          <div>CUESTIONARIO</div><div>ÁREA</div><div>PREGUNTAS</div><div>GRUPO</div><div>ESTADO</div><div>PROMEDIO</div>
+          <div>CUESTIONARIO</div><div>PROFESOR</div><div>PREGUNTAS</div><div>GRUPO</div><div>ESTADO</div><div>PROMEDIO</div>
         </div>
         <div class="trow cols-cuest">
-          <div style="font-weight: 600;">Lectura Crítica · Semana 3</div><div style="color: #6B6350;">Lectura Crítica</div><div>20</div><div style="color: #6B6350;">Sabatino 2026-B</div><div><span class="badge badge-ok">Activo</span></div><div style="font-weight: 800; color: #2B2620;">68%</div>
+          <div style="font-weight: 600;">Lectura Crítica · Semana 3</div><div style="color: #6B6350;">Diana Ordóñez</div><div>36</div><div style="color: #6B6350;">Sabatino 2026-B</div><div><span class="badge badge-ok">Activo</span></div><div style="font-weight: 800; color: #2B2620;">68%</div>
         </div>
         <div class="trow cols-cuest">
-          <div style="font-weight: 600;">Matemáticas · Semana 3</div><div style="color: #6B6350;">Matemáticas</div><div>20</div><div style="color: #6B6350;">Sabatino 2026-B</div><div><span class="badge badge-ok">Activo</span></div><div style="color: #94896E;">en curso</div>
+          <div style="font-weight: 600;">Matemáticas · Semana 3</div><div style="color: #6B6350;">Carlos Muñoz</div><div>36</div><div style="color: #6B6350;">Sabatino 2026-B</div><div><span class="badge badge-ok">Activo</span></div><div style="color: #94896E;">en curso</div>
         </div>
         <div class="trow cols-cuest">
-          <div style="font-weight: 600;">Ciencias Naturales · Semana 3</div><div style="color: #6B6350;">C. Naturales</div><div>15</div><div style="color: #6B6350;">Sabatino 2026-B</div><div><span class="badge badge-ok">Activo</span></div><div style="color: #94896E;">en curso</div>
+          <div style="font-weight: 600;">Biología · Semana 3</div><div style="color: #6B6350;">Lucía Guampe</div><div>20</div><div style="color: #6B6350;">Intensivo Julio</div><div><span class="badge badge-ok">Activo</span></div><div style="color: #94896E;">en curso</div>
         </div>
         <div class="trow cols-cuest">
-          <div style="font-weight: 600;">Inglés · Semana 2</div><div style="color: #6B6350;">Inglés</div><div>15</div><div style="color: #6B6350;">Sabatino 2026-B</div><div><span class="badge badge-off">Cerrado</span></div><div style="font-weight: 800; color: #2B2620;">72%</div>
+          <div style="font-weight: 600;">Inglés · Semana 2</div><div style="color: #6B6350;">Paola Astaiza</div><div>40</div><div style="color: #6B6350;">Sabatino 2026-B</div><div><span class="badge badge-off">Cerrado</span></div><div style="font-weight: 800; color: #2B2620;">72%</div>
         </div>
         <div class="trow cols-cuest">
-          <div style="font-weight: 600;">Sociales · Semana 2</div><div style="color: #6B6350;">Sociales</div><div>20</div><div style="color: #6B6350;">Intensivo Julio</div><div><span class="badge badge-off">Cerrado</span></div><div style="font-weight: 800; color: #C24B3A;">58%</div>
+          <div style="font-weight: 600;">Sociales · Semana 2</div><div style="color: #6B6350;">Hernán Chocué</div><div>36</div><div style="color: #6B6350;">Intensivo Julio</div><div><span class="badge badge-off">Cerrado</span></div><div style="font-weight: 800; color: #C24B3A;">58%</div>
         </div>
         <div class="trow cols-cuest">
-          <div style="font-weight: 600;">Lectura Crítica · Semana 2</div><div style="color: #6B6350;">Lectura Crítica</div><div>20</div><div style="color: #6B6350;">Sabatino 2026-B</div><div><span class="badge badge-off">Cerrado</span></div><div style="font-weight: 800; color: #26221B;">62%</div>
+          <div style="font-weight: 600;">Física · Semana 2</div><div style="color: #6B6350;">Andrés Calambás</div><div>20</div><div style="color: #6B6350;">Sabatino 2026-B</div><div><span class="badge badge-off">Cerrado</span></div><div style="font-weight: 800; color: #26221B;">61%</div>
         </div>
         <div class="trow cols-cuest">
-          <div style="font-weight: 600;">Genética y herencia · Refuerzo</div><div style="color: #6B6350;">C. Naturales</div><div>10</div><div style="color: #6B6350;">Intensivo Julio</div><div><span class="badge badge-draft">Borrador</span></div><div style="color: #94896E;">—</div>
+          <div style="font-weight: 600;">Química · Refuerzo estequiometría</div><div style="color: #6B6350;">Marcela Velasco</div><div>20</div><div style="color: #6B6350;">Intensivo Julio</div><div><span class="badge badge-draft">Borrador</span></div><div style="color: #94896E;">—</div>
         </div>
       </div>
     </div>
@@ -357,7 +503,7 @@
             <div style="font-weight: 600;">Sara Imbachí</div><div style="color: #6B6350;">PP-2026-0203</div><div style="color: #6B6350;">Sabatino B</div><div style="font-weight: 800; color: #C24B3A;">241/500</div><div style="color: #C24B3A; font-weight: 700;">▼ en riesgo</div><div><span class="badge badge-ok">Activo</span></div>
           </div>
           <div class="trow cols-est">
-            <div style="font-weight: 600;">Santiago López</div><div style="color: #6B6350;">SM-2025-0310</div><div style="color: #6B6350;">Egresado</div><div style="font-weight: 800; color: #26221B;">358/500</div><div style="color: #94896E; font-weight: 700;">—</div><div><span class="badge badge-off">Inactivo</span></div>
+            <div style="font-weight: 600;">Santiago López</div><div style="color: #6B6350;">PP-2025-0310</div><div style="color: #6B6350;">Egresado</div><div style="font-weight: 800; color: #26221B;">358/500</div><div style="color: #94896E; font-weight: 700;">—</div><div><span class="badge badge-off">Inactivo</span></div>
           </div>
         </div>
       </div>
@@ -377,8 +523,8 @@
     <div style="background: #26221B; border-radius: 16px; padding: 22px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
       <div style="display: flex; flex-direction: column; gap: 5px;">
         <div style="font-size: 12px; font-weight: 700; color: #E8C94E; letter-spacing: 1px;">PRÓXIMO SIMULACRO</div>
-        <div style="font-size: 20px; font-weight: 800; color: #fff;">Simulacro Nacional 3 · Sábado 11 de julio · 8:00 a.m.</div>
-        <div style="font-size: 14px; color: #A8A08A;">5 áreas · 4 h 30 min · Sedes Centro y Norte</div>
+        <div style="font-size: 20px; font-weight: 800; color: #fff;">Simulacro Nacional 3 · Sábado 18 de julio · 8:00 a.m.</div>
+        <div style="font-size: 14px; color: #A8A08A;">7 materias · 208 preguntas · 4 h 30 min · Sedes Centro y Norte</div>
       </div>
       <div style="display: flex; align-items: center; gap: 18px;">
         <div style="text-align: right;">
@@ -406,9 +552,9 @@
         <div style="font-size: 12px; color: #94896E;">276 de 300 estudiantes</div>
       </div>
       <div class="stat">
-        <div style="font-size: 13px; color: #94896E;">Área más débil del grupo</div>
-        <div style="font-size: 17px; font-weight: 800; color: #C24B3A; line-height: 1.3;">Ciencias Naturales</div>
-        <div style="font-size: 12px; color: #94896E;">54 pts promedio · escala 0–100</div>
+        <div style="font-size: 13px; color: #94896E;">Materia más débil del grupo</div>
+        <div style="font-size: 17px; font-weight: 800; color: #C24B3A; line-height: 1.3;">Física</div>
+        <div style="font-size: 12px; color: #94896E;">48 pts promedio · escala 0–100</div>
       </div>
     </div>
 
@@ -437,6 +583,19 @@
 
 <script>
 const LETTERS = 'ABCD';
+
+// ─── Las 7 torres (una por profesor) ───
+const TORRES = [
+  { key: 'lc',  sigla: 'LC', materia: 'Lectura Crítica',       prof: 'Diana Ordóñez',   banco: 104, npreg: 36 },
+  { key: 'mat', sigla: 'MT', materia: 'Matemáticas',           prof: 'Carlos Muñoz',    banco: 104, npreg: 36 },
+  { key: 'soc', sigla: 'SC', materia: 'Sociales y Ciudadanas', prof: 'Hernán Chocué',   banco: 104, npreg: 36 },
+  { key: 'ing', sigla: 'IN', materia: 'Inglés',                prof: 'Paola Astaiza',   banco: 114, npreg: 40 },
+  { key: 'bio', sigla: 'BI', materia: 'Biología',              prof: 'Lucía Guampe',    banco: 58,  npreg: 20 },
+  { key: 'fis', sigla: 'FI', materia: 'Física',                prof: 'Andrés Calambás', banco: 58,  npreg: 20 },
+  { key: 'qui', sigla: 'QU', materia: 'Química',               prof: 'Marcela Velasco', banco: 58,  npreg: 20 },
+];
+let torreKey = 'lc';
+
 const DEFAULT_OPTS = [
   'persuadir al lector de cambiar sus hábitos de consumo.',
   'informar sobre estadísticas de reciclaje en Colombia.',
@@ -469,6 +628,50 @@ function demoToast(msg) {
   demoToastTimer = setTimeout(() => { t.style.display = 'none'; }, 2800);
 }
 
+// ─── Torre de selección ───
+function buildTorreSelect() {
+  const sel = document.getElementById('torre-select');
+  sel.innerHTML = '';
+  TORRES.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.key;
+    opt.textContent = 'Prof. ' + t.prof + ' · ' + t.materia;
+    sel.appendChild(opt);
+  });
+  sel.value = torreKey;
+}
+
+function setTorre(key) {
+  torreKey = key;
+  const t = TORRES.find(x => x.key === key);
+  document.getElementById('torre-select').value = key;
+  document.getElementById('torre-sigla').textContent = t.sigla;
+  document.getElementById('torre-titulo').textContent = 'Torre de ' + t.materia + ' · Prof. ' + t.prof;
+  document.getElementById('torre-detalle').textContent = t.banco + ' preguntas en tu torre · cuestionarios de ' + t.npreg + ' preguntas';
+  document.getElementById('b-area').value = t.materia;
+  document.getElementById('pv-area').textContent = t.materia;
+  buildDist();
+}
+
+function buildDist() {
+  const box = document.getElementById('dist-rows');
+  box.innerHTML = '';
+  const max = Math.max(...TORRES.map(t => t.banco));
+  TORRES.forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'dist-row' + (t.key === torreKey ? ' sel' : '');
+    row.innerHTML =
+      '<div style="display: flex; justify-content: space-between; font-size: 13px;">' +
+        '<span class="dist-name" style="color: #3E382B;">' + t.materia + ' <span style="color: #94896E; font-weight: 400;">· Prof. ' + t.prof + '</span></span>' +
+        '<span style="font-weight: 700; color: #2B2620;">' + t.banco + '</span>' +
+      '</div>' +
+      '<div class="dist-bar"><div style="width: ' + Math.round(t.banco / max * 100) + '%;"></div></div>';
+    row.onclick = () => setTorre(t.key);
+    box.appendChild(row);
+  });
+}
+
+// ─── Formulario del banco ───
 function buildOpts() {
   const box = document.getElementById('b-opts');
   box.innerHTML = '';
@@ -488,7 +691,6 @@ function buildOpts() {
 }
 
 function preview() {
-  document.getElementById('pv-area').textContent = document.getElementById('b-area').value;
   document.getElementById('pv-enun').textContent = document.getElementById('b-enun').value || '…';
   const box = document.getElementById('pv-opts');
   box.innerHTML = '';
@@ -506,13 +708,136 @@ function preview() {
 let toastTimer;
 function save() {
   saved++;
+  const t = TORRES.find(x => x.key === torreKey);
   const toast = document.getElementById('b-toast');
-  toast.textContent = 'Pregunta guardada en el banco · ' + (saved === 1 ? '1 pregunta nueva' : saved + ' preguntas nuevas');
+  toast.textContent = 'Pregunta guardada en la torre de ' + t.materia + ' · ' + (saved === 1 ? '1 pregunta nueva' : saved + ' preguntas nuevas');
   toast.style.display = 'block';
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toast.style.display = 'none'; }, 3500);
 }
 
+// ─── Cargar con IA ───
+const IA_STEPS = [
+  'Leyendo el documento (48 páginas)',
+  'Extrayendo enunciados y opciones de respuesta',
+  'Identificando las respuestas correctas',
+  'Generando explicaciones pedagógicas',
+];
+const IA_PREVIEWS = [
+  {
+    comp: 'Propósito del texto',
+    enun: 'El propósito principal del texto es',
+    opts: [
+      'presentar la tensión entre conservar una tradición viva y convertirla en un atractivo turístico.',
+      'narrar la historia de la fundación de Popayán y de sus iglesias coloniales.',
+      'convencer al lector de que asista a las procesiones de Semana Santa.',
+      'explicar cómo se construyen los pasos de madera.',
+    ],
+    correct: 0,
+  },
+  {
+    comp: 'Inferencia',
+    enun: 'Del texto puede inferirse que, para los cargueros, el valor de las procesiones depende de',
+    opts: [
+      'su continuidad y su transmisión de una generación a otra.',
+      'la cantidad de visitantes que atraigan cada año.',
+      'el reconocimiento económico que reciben.',
+      'la incorporación de elementos modernos.',
+    ],
+    correct: 0,
+  },
+  {
+    comp: 'Reflexionar y evaluar',
+    enun: '¿Cuál de las siguientes afirmaciones, de ser cierta, debilitaría el argumento central del texto?',
+    opts: [
+      'La mayor parte del agua de las ciudades andinas proviene de acuíferos que no dependen de los páramos.',
+      'Los frailejones crecen un centímetro por año.',
+      'Los páramos ocupan menos del 2 % del territorio.',
+      'La niebla es frecuente en el volcán Puracé.',
+    ],
+    correct: 0,
+  },
+];
+let iaTimers = [];
+
+function iaBuildSteps() {
+  const box = document.getElementById('ia-steps');
+  box.innerHTML = '';
+  IA_STEPS.forEach(label => {
+    const div = document.createElement('div');
+    div.className = 'ia-step';
+    div.innerHTML = '<div class="ia-dot"></div><span></span>';
+    div.querySelector('span').textContent = label;
+    box.appendChild(div);
+  });
+}
+
+function iaStart() {
+  document.getElementById('ia-drop').style.display = 'none';
+  document.getElementById('ia-result').style.display = 'none';
+  const proc = document.getElementById('ia-processing');
+  proc.style.display = 'flex';
+  iaBuildSteps();
+  document.getElementById('ia-bar').style.width = '0%';
+  const steps = [...document.querySelectorAll('#ia-steps .ia-step')];
+  const STEP_MS = 1600;
+  steps[0].classList.add('doing');
+  IA_STEPS.forEach((_, i) => {
+    iaTimers.push(setTimeout(() => {
+      document.getElementById('ia-bar').style.width = Math.round((i + 1) / IA_STEPS.length * 100) + '%';
+      steps[i].classList.remove('doing');
+      steps[i].classList.add('done');
+      steps[i].querySelector('.ia-dot').textContent = '✓';
+      if (i + 1 < steps.length) steps[i + 1].classList.add('doing');
+    }, (i + 1) * STEP_MS));
+  });
+  iaTimers.push(setTimeout(() => {
+    proc.style.display = 'none';
+    iaShowResult();
+  }, IA_STEPS.length * STEP_MS + 600));
+}
+
+function iaShowResult() {
+  const box = document.getElementById('ia-previews');
+  box.innerHTML = '';
+  IA_PREVIEWS.forEach((q, n) => {
+    const card = document.createElement('div');
+    card.className = 'ia-q';
+    let optsHtml = '';
+    q.opts.forEach((o, i) => {
+      optsHtml += '<div class="ia-q-opt' + (i === q.correct ? ' ok' : '') + '"><b>' + LETTERS[i] + '.</b> ' + o + (i === q.correct ? ' <span style="font-size: 11px; font-weight: 800; color: #8F6B00;">✓ CORRECTA</span>' : '') + '</div>';
+    });
+    card.innerHTML =
+      '<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">' +
+        '<div style="font-size: 12px; font-weight: 700; color: #94896E;">Pregunta ' + (n + 1) + ' de 24</div>' +
+        '<div style="font-size: 11px; font-weight: 700; color: #2B2620; background: #FCEFB8; border-radius: 999px; padding: 4px 10px;">' + q.comp + '</div>' +
+      '</div>' +
+      '<div style="font-size: 14px; font-weight: 700; color: #26221B; line-height: 1.4;">' + q.enun + '</div>' +
+      optsHtml;
+    box.appendChild(card);
+  });
+  document.getElementById('ia-result').style.display = 'flex';
+}
+
+function iaApprove() {
+  const lc = TORRES.find(x => x.key === 'lc');
+  lc.banco += 24;
+  document.getElementById('banco-total').textContent = TORRES.reduce((s, t) => s + t.banco, 0);
+  buildDist();
+  demoToast('24 preguntas agregadas a la torre de Lectura Crítica · el banco quedó en ' + TORRES.reduce((s, t) => s + t.banco, 0) + ' preguntas');
+  iaReset();
+}
+
+function iaReset() {
+  iaTimers.forEach(clearTimeout);
+  iaTimers = [];
+  document.getElementById('ia-processing').style.display = 'none';
+  document.getElementById('ia-result').style.display = 'none';
+  document.getElementById('ia-drop').style.display = 'flex';
+}
+
+buildTorreSelect();
+setTorre('lc');
 buildOpts();
 preview();
 </script>

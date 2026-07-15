@@ -19,19 +19,17 @@
 
   /* generic bits */
   .chip { font-size: 13px; font-weight: 700; color: #2B2620; background: #FCEFB8; border-radius: 999px; padding: 6px 13px; }
-  .chip-fase { font-size: 13px; font-weight: 700; color: #fff; border-radius: 999px; padding: 6px 13px; white-space: nowrap; }
-  .chip-fase.concepto { background: #26221B; }
-  .chip-fase.icfes { background: #A67C00; }
+  .chip-comp { font-size: 12px; font-weight: 700; color: #fff; background: #26221B; border-radius: 999px; padding: 6px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 1px 3px rgba(38,34,27,0.06); }
   .btn-primary { background: #A67C00; color: #fff; border: none; border-radius: 12px; padding: 16px; font-size: 15px; font-weight: 700; box-shadow: 0 6px 16px rgba(166,124,0,0.3); transition: background 0.15s; }
   .btn-primary:hover { background: #8F6B00; }
   .btn-outline { border: 1.5px solid #E4CD7A; background: none; color: #2B2620; border-radius: 12px; padding: 15px; font-size: 15px; font-weight: 700; }
   .btn-ghost { background: none; border: none; color: #2B2620; font-size: 14px; font-weight: 700; padding: 8px; }
+  #demo-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #26221B; color: #fff; font-size: 14px; font-weight: 600; border-radius: 12px; padding: 13px 22px; box-shadow: 0 8px 24px rgba(38,34,27,0.35); z-index: 99; display: none; max-width: 88vw; text-align: center; }
 
   /* LOGIN */
   #screen-login { padding: 64px 28px 36px; background: linear-gradient(180deg, #FFFCF0 0%, #FBF2D2 100%); }
   .login-head { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .login-head img { width: 220px; border-radius: 14px; }
   .login-head div { font-size: 15px; color: #6B6350; }
   .field { display: flex; flex-direction: column; gap: 6px; }
   .field label { font-size: 13px; font-weight: 600; color: #3E382B; }
@@ -40,10 +38,24 @@
 
   /* HOME */
   .home-header { background: #2B2620; padding: 52px 24px 26px; display: flex; flex-direction: column; gap: 18px; }
-  .quiz-card-row { background: #fff; border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 3px rgba(38,34,27,0.06); }
-  .area-badge { width: 42px; height: 42px; border-radius: 11px; background: #FCEFB8; color: #2B2620; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; flex-shrink: 0; }
+  .materia-play { background: #fff; border: 2px solid #A67C00; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 6px 20px rgba(166,124,0,0.12); }
+  .materia-row { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 13px; box-shadow: 0 1px 3px rgba(38,34,27,0.06); cursor: pointer; }
+  .area-badge { width: 42px; height: 42px; border-radius: 11px; background: #FCEFB8; color: #2B2620; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
 
-  /* QUIZ options */
+  /* QUIZ */
+  .ctx-block { background: #FAF5DF; border: 1px solid #EDE3C2; border-radius: 12px; padding: 14px 16px; max-height: 38dvh; overflow-y: auto; }
+  .ctx-block .ctx-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #A67C00; margin-bottom: 8px; }
+  .ctx-pasaje { font-family: Georgia, 'Times New Roman', serif; font-size: 15px; color: #2B2620; line-height: 1.65; }
+  .ctx-pasaje p + p { margin-top: 10px; }
+  .ctx-sit { font-size: 14px; color: #3E382B; line-height: 1.6; }
+  .ctx-sit p + p { margin-top: 8px; }
+  .ctx-fig { margin-top: 10px; background: #fff; border: 1px solid #EDE3C2; border-radius: 10px; padding: 10px; }
+  .ctx-fig svg { display: block; width: 100%; height: auto; }
+  .ctx-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; border-radius: 10px; overflow: hidden; font-size: 13px; }
+  .ctx-table th { background: #FCEFB8; color: #2B2620; font-weight: 700; padding: 8px 10px; text-align: left; }
+  .ctx-table td { padding: 8px 10px; color: #26221B; border-top: 1px solid #F1EAD2; font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+  .ctx-table td:first-child { font-family: 'Plus Jakarta Sans', sans-serif; }
+
   .opt { background: #fff; border: 2px solid #EDE3C2; border-radius: 13px; padding: 13px 15px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: all 0.15s; }
   .opt .letter { width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 1.5px solid #E6DBB4; color: #94896E; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
   .opt .txt { font-size: 14px; color: #26221B; line-height: 1.4; }
@@ -113,30 +125,16 @@
       </div>
     </div>
     <div style="padding: 22px 24px 30px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
-      <div style="font-size: 16px; font-weight: 700; color: #26221B;">Cuestionarios de esta semana</div>
-      <div style="background: #fff; border: 2px solid #A67C00; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 6px 20px rgba(166,124,0,0.12);">
-        <div style="display: flex; align-items: center; gap: 14px;">
-          <div class="area-badge" style="font-size: 14px; width: 44px; height: 44px;">LC+MT</div>
-          <div style="flex: 1;">
-            <div style="font-size: 16px; font-weight: 700; color: #26221B;">Simulacro corto</div>
-            <div style="font-size: 13px; color: #94896E;">6 preguntas · 3 de concepto + 3 tipo ICFES</div>
-          </div>
-        </div>
-        <button class="btn-primary" style="padding: 15px;" onclick="startQuiz()">Empezar ahora</button>
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <div style="font-size: 16px; font-weight: 700; color: #26221B;">Tus materias</div>
+        <div style="font-size: 12px; color: #94896E;">7 torres · un profesor por materia</div>
       </div>
-      <div class="quiz-card-row">
-        <div class="area-badge">CN</div>
-        <div style="flex: 1;">
-          <div style="font-size: 15px; font-weight: 700; color: #26221B;">Ciencias Naturales</div>
-          <div style="font-size: 13px; color: #94896E;">15 preguntas · 20 min</div>
-        </div>
-        <div style="font-size: 13px; font-weight: 700; color: #2B2620; border: 1.5px solid #E4CD7A; border-radius: 999px; padding: 7px 15px;">Pendiente</div>
-      </div>
-      <div class="quiz-card-row" style="background: #FFF; border: 1.5px dashed #E4CD7A; box-shadow: none;">
+      <div id="home-materias" style="display: flex; flex-direction: column; gap: 12px;"></div>
+      <div class="materia-row" style="border: 1.5px dashed #E4CD7A; box-shadow: none; cursor: default;">
         <div class="area-badge" style="background: #26221B; color: #fff; font-size: 13px;">S11</div>
         <div style="flex: 1;">
-          <div style="font-size: 15px; font-weight: 700; color: #26221B;">Simulacro completo</div>
-          <div style="font-size: 13px; color: #94896E;">Sábado 11 jul · 8:00 a.m.</div>
+          <div style="font-size: 15px; font-weight: 700; color: #26221B;">Simulacro completo · 208 preguntas</div>
+          <div style="font-size: 13px; color: #94896E;">Sábado 18 jul · 8:00 a.m. · Sede Centro</div>
         </div>
       </div>
       <button onclick="go('login')" style="margin-top: auto; background: none; border: none; color: #94896E; font-size: 13px; font-weight: 600; padding: 8px;">Cerrar sesión</button>
@@ -148,7 +146,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
       <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
         <div class="chip" id="q-area">Lectura Crítica</div>
-        <div class="chip-fase concepto" id="q-tipo">Conceptual</div>
+        <div class="chip-comp" id="q-comp">Inferencia</div>
       </div>
       <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3E382B; background: #fff; border: 1px solid #EDE3C2; border-radius: 999px; padding: 6px 13px; flex-shrink: 0;" id="q-clock">12:00</div>
     </div>
@@ -161,11 +159,14 @@
         <div id="q-progress" style="width: 0%; height: 100%; border-radius: 999px; background: #A67C00; transition: width 0.3s;"></div>
       </div>
     </div>
-    <div class="card" style="margin-top: 18px; display: flex; flex-direction: column; gap: 12px;">
-      <div id="q-context" style="font-size: 14px; color: #6B6350; line-height: 1.55; font-style: italic; border-left: 3px solid #E4CD7A; padding-left: 12px;"></div>
-      <div id="q-text" style="font-size: 16px; font-weight: 700; color: #26221B; line-height: 1.45;"></div>
+    <div class="ctx-block" id="q-context-block" style="margin-top: 16px;">
+      <div class="ctx-eyebrow" id="q-context-label">TEXTO</div>
+      <div id="q-context"></div>
     </div>
-    <div id="q-opts" style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;"></div>
+    <div class="card" style="margin-top: 12px; padding: 16px 18px;">
+      <div id="q-text" style="font-size: 15px; font-weight: 700; color: #26221B; line-height: 1.45;"></div>
+    </div>
+    <div id="q-opts" style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;"></div>
     <div style="display: flex; gap: 12px; margin-top: auto; padding-top: 18px;">
       <button class="btn-outline" style="flex: 1;" id="q-prev" onclick="quizPrev()">Anterior</button>
       <button class="btn-primary" style="flex: 2; padding: 15px;" id="q-next" onclick="quizNext()">Siguiente</button>
@@ -175,7 +176,7 @@
   <!-- ══════════ RESULTS ══════════ -->
   <section id="screen-results" style="padding: 52px 24px 30px;">
     <div style="text-align: center;">
-      <div style="font-size: 14px; color: #94896E;">Simulacro corto · 6 preguntas</div>
+      <div style="font-size: 14px; color: #94896E;" id="r-sub">Cuestionario · 6 preguntas</div>
       <div style="font-size: 20px; font-weight: 800; color: #26221B; margin-top: 4px;" id="r-title"></div>
     </div>
     <div style="display: flex; justify-content: center; margin-top: 24px;">
@@ -201,7 +202,7 @@
       </div>
     </div>
     <div class="card" style="margin-top: 16px; padding: 18px; display: flex; flex-direction: column; gap: 13px;">
-      <div style="font-size: 14px; font-weight: 700; color: #26221B;">Desempeño por área</div>
+      <div style="font-size: 14px; font-weight: 700; color: #26221B;">Desempeño por competencia</div>
       <div id="r-areas" style="display: flex; flex-direction: column; gap: 13px;"></div>
     </div>
     <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 18px;">
@@ -216,11 +217,15 @@
       <div class="chip" id="rv-area"></div>
       <div style="font-size: 13px; color: #94896E; font-weight: 600;" id="rv-pos"></div>
     </div>
-    <div class="card" style="margin-top: 16px;">
-      <div style="font-size: 13px; color: #94896E; margin-bottom: 6px;" id="rv-num"></div>
-      <div style="font-size: 16px; font-weight: 700; color: #26221B; line-height: 1.45;" id="rv-text"></div>
+    <div class="ctx-block" id="rv-context-block" style="margin-top: 14px; max-height: 26dvh;">
+      <div class="ctx-eyebrow" id="rv-context-label">TEXTO</div>
+      <div id="rv-context"></div>
     </div>
-    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+    <div class="card" style="margin-top: 12px; padding: 16px 18px;">
+      <div style="font-size: 13px; color: #94896E; margin-bottom: 6px;" id="rv-num"></div>
+      <div style="font-size: 15px; font-weight: 700; color: #26221B; line-height: 1.45;" id="rv-text"></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
       <div style="background: #FBEDEA; border: 1.5px solid #E0A79D; border-radius: 13px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start;">
         <div style="width: 28px; height: 28px; border-radius: 50%; background: #C24B3A; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;" id="rv-your-letter"></div>
         <div>
@@ -236,7 +241,7 @@
         </div>
       </div>
     </div>
-    <div class="card" style="margin-top: 14px; display: flex; flex-direction: column; gap: 10px;">
+    <div class="card" style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px;">
       <div style="display: flex; align-items: center; gap: 8px;">
         <div style="width: 22px; height: 22px; border-radius: 50%; background: #2B2620; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800;">?</div>
         <div style="font-size: 14px; font-weight: 800; color: #26221B;">¿Por qué?</div>
@@ -253,10 +258,14 @@
   <!-- ══════════ TEACHER ══════════ -->
   <section id="screen-teacher">
     <div style="background: #26221B; padding: 52px 24px 20px;">
-      <div style="font-size: 13px; color: #A8A08A;">Panel del profesor · Banco de preguntas</div>
+      <div style="font-size: 13px; color: #A8A08A;">Panel del profesor · Torre de Lectura Crítica</div>
       <div style="font-size: 22px; font-weight: 800; color: #fff; margin-top: 4px;">Nueva pregunta</div>
     </div>
     <div style="padding: 20px 24px 30px; display: flex; flex-direction: column; gap: 16px; flex: 1;">
+      <div style="background: #FDF4C9; border: 1.5px solid #E8C94E; border-radius: 12px; padding: 12px 15px; display: flex; gap: 10px; align-items: center;">
+        <div class="area-badge" style="width: 36px; height: 36px; font-size: 12px;">LC</div>
+        <div style="font-size: 13px; color: #2B2620; line-height: 1.4;"><b>Prof. Diana Ordóñez · Lectura Crítica.</b> Cada profesor gestiona únicamente el banco de su materia.</div>
+      </div>
       <div class="t-field" style="display: flex; flex-direction: column; gap: 6px;">
         <label>Enunciado</label>
         <textarea id="t-enun" placeholder="Escribe la pregunta…" rows="3" oninput="teacherRefresh()"></textarea>
@@ -271,7 +280,7 @@
       </div>
       <div id="t-toast" style="display: none; background: #FDF4C9; border: 1.5px solid #E8C94E; border-radius: 12px; padding: 13px 16px; font-size: 14px; font-weight: 700; color: #2B2620; text-align: center;"></div>
       <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 10px;">
-        <button class="btn-primary" id="t-save" onclick="teacherSave()">Guardar pregunta</button>
+        <button class="btn-primary" id="t-save" onclick="teacherSave()">Guardar en mi torre</button>
         <a href="panel.html" style="text-align: center; font-size: 13px; font-weight: 700; color: #2B2620; text-decoration: none; padding: 4px;">Ver panel del instituto (web) →</a>
         <button onclick="go('login')" style="background: none; border: none; color: #94896E; font-size: 13px; font-weight: 600; padding: 6px;">← Volver al ingreso</button>
       </div>
@@ -280,93 +289,272 @@
 
 </div>
 </div>
+<div id="demo-toast"></div>
 
 <script>
-// ─── Banco de preguntas de la demo ───
-const BANK = [
-  // ─── Fase 1 · 3 preguntas conceptuales ───
-  {
-    area: 'Matemáticas',
-    tipo: 'Conceptual',
-    context: null,
-    text: 'Si 3x − 5 = 16, el valor de x² es',
-    opts: ['49', '36', '121', '64'],
-    correct: 0,
-    exp: 'Primero despeja x: 3x = 16 + 5 = 21, entonces x = 7. Luego eleva al cuadrado: x² = 7 × 7 = 49. El error común es elevar 21 o 6 al cuadrado por despejar mal.',
-    tip: 'Resuelve la ecuación por pasos y verifica reemplazando: 3(7) − 5 = 21 − 5 = 16 ✓',
-  },
-  {
-    area: 'Matemáticas',
-    tipo: 'Conceptual',
-    context: null,
-    text: 'Una chaqueta cuesta $150.000 y tiene un descuento del 30%. ¿Cuánto se paga por ella?',
-    opts: ['$105.000', '$120.000', '$45.000', '$110.000'],
-    correct: 0,
-    exp: 'El 30% de $150.000 es 0,30 × 150.000 = $45.000. Ese es el descuento, no el precio final. Lo que se paga es 150.000 − 45.000 = $105.000. La trampa clásica es marcar $45.000.',
-    tip: 'Atajo: pagar con 30% de descuento es pagar el 70%. 0,70 × 150.000 = 105.000.',
-  },
-  {
-    area: 'Matemáticas',
-    tipo: 'Conceptual',
-    context: null,
-    text: 'Se lanza un dado normal de seis caras. ¿Cuál es la probabilidad de obtener un número mayor que 4?',
-    opts: ['1/3', '1/2', '1/6', '2/3'],
-    correct: 0,
-    exp: 'Los números mayores que 4 son el 5 y el 6: dos casos favorables de seis posibles. La probabilidad es 2/6, que simplificada es 1/3. Ojo: «mayor que 4» no incluye el 4.',
-    tip: 'Probabilidad = casos favorables ÷ casos posibles. Enumera los casos antes de calcular.',
-  },
-  // ─── Fase 2 · preguntas tipo ICFES ───
-  {
-    area: 'Lectura Crítica',
-    tipo: 'Tipo ICFES',
-    context: '«La economía circular propone que los materiales no se desechen, sino que vuelvan al ciclo productivo una y otra vez, imitando los ciclos de la naturaleza, donde nada se pierde.»',
-    text: 'Según el texto, el propósito principal de la economía circular es',
-    opts: [
-      'aumentar la producción de bienes de consumo.',
-      'reincorporar los materiales al ciclo productivo para reducir desechos.',
-      'eliminar por completo la industria manufacturera.',
-      'reemplazar el dinero por el intercambio de materiales.',
-    ],
-    correct: 1,
-    exp: 'El texto define la economía circular como un modelo donde los materiales «vuelvan al ciclo productivo una y otra vez». La opción B recoge literalmente esa idea; las demás agregan información que el texto no dice.',
-    tip: 'En preguntas de propósito, busca la opción que repita la idea central del texto con otras palabras, sin agregar nada nuevo.',
-  },
-  {
-    area: 'Lectura Crítica',
-    tipo: 'Tipo ICFES',
-    context: '«El plástico, ese huésped incómodo de los océanos, tarda siglos en degradarse.»',
-    text: 'En el fragmento, la expresión «huésped incómodo» cumple la función de',
-    opts: [
-      'presentar el plástico como un visitante indeseado mediante una metáfora.',
-      'informar el tiempo exacto de degradación del plástico.',
-      'describir una especie marina que habita los océanos.',
-      'citar la opinión de un científico sobre el plástico.',
-    ],
-    correct: 0,
-    exp: 'Llamar «huésped incómodo» al plástico es una metáfora: le atribuye rasgos humanos (ser un visitante que molesta) para transmitir que está donde no debería. No es información literal ni una cita.',
-    tip: 'Cuando una expresión atribuye cualidades humanas o de otro objeto a algo, casi siempre es lenguaje figurado: metáfora o personificación.',
-  },
-  {
-    area: 'Lectura Crítica',
-    tipo: 'Tipo ICFES',
-    context: '«Es urgente cambiar nuestros hábitos: no podemos seguir tratando el planeta como un basurero infinito. La decisión está en tus manos.»',
-    text: 'Del fragmento puede inferirse que la intención principal del autor es',
-    opts: [
-      'persuadir al lector de cambiar sus hábitos de consumo.',
-      'narrar la historia del movimiento ambientalista.',
-      'describir un proceso industrial de forma neutral.',
-      'informar sobre estadísticas de reciclaje en Colombia.',
-    ],
-    correct: 0,
-    exp: 'El autor usa expresiones valorativas («es urgente», «no podemos seguir así») y cierra con un llamado directo al lector. Cuando un texto combina argumentos con apelaciones al receptor, su intención es persuadir, no solo informar.',
-    tip: 'Subraya los verbos en primera persona plural y los adjetivos de juicio; delatan la postura del autor.',
-  },
+// ─── Las 7 materias de Pensar (torre de selección: una por profesor) ───
+const MATERIAS = [
+  { key: 'lc',  sigla: 'LC', nombre: 'Lectura Crítica',        prof: 'Diana Ordóñez',    npreg: 36, jugable: true },
+  { key: 'mat', sigla: 'MT', nombre: 'Matemáticas',            prof: 'Carlos Muñoz',     npreg: 36, jugable: true },
+  { key: 'soc', sigla: 'SC', nombre: 'Sociales y Ciudadanas',  prof: 'Hernán Chocué',    npreg: 36 },
+  { key: 'ing', sigla: 'IN', nombre: 'Inglés',                 prof: 'Paola Astaiza',    npreg: 40 },
+  { key: 'bio', sigla: 'BI', nombre: 'Biología',               prof: 'Lucía Guampe',     npreg: 20 },
+  { key: 'fis', sigla: 'FI', nombre: 'Física',                 prof: 'Andrés Calambás',  npreg: 20 },
+  { key: 'qui', sigla: 'QU', nombre: 'Química',                prof: 'Marcela Velasco',  npreg: 20 },
 ];
+
+// ─── Pasajes compartidos (formato cuadernillo: un texto, varias preguntas) ───
+const PASAJE_SEMANA_SANTA = `<p>Cada año, durante la Semana Santa, Popayán se transforma. Las procesiones que recorren el centro histórico desde el siglo XVI no son un simple desfile religioso: son un mecanismo de memoria colectiva en el que participan por igual creyentes y no creyentes. Los «cargueros», que llevan sobre sus hombros pasos de madera que pueden superar los cuatrocientos kilos, heredan ese oficio de sus padres y abuelos, y lo consideran un honor que no se compra ni se vende.</p><p>En 2009, la Unesco inscribió las procesiones en la Lista Representativa del Patrimonio Cultural Inmaterial de la Humanidad. La declaratoria trajo visibilidad y turismo, pero también una tensión: algunos sectores proponen «modernizar» la celebración para hacerla más atractiva al visitante, mientras los cargueros defienden que su valor reside precisamente en aquello que no cambia. Si la procesión se convierte en espectáculo, advierten, dejará de ser patrimonio vivo para volverse una escenografía: un decorado que se mira, pero que ya no se hereda.</p>`;
+
+const PASAJE_PARAMO = `<p>A pocos kilómetros de Popayán, en las faldas del volcán Puracé, comienza uno de los ecosistemas más extraños y valiosos del planeta: el páramo. Los páramos ocupan menos del 2&nbsp;% del territorio colombiano y, sin embargo, de ellos depende cerca del 70&nbsp;% del agua que consumen las ciudades andinas. El secreto está en sus suelos y en sus plantas. Los frailejones, con sus hojas cubiertas de vellosidades, capturan el agua de la niebla gota a gota; los suelos, ricos en materia orgánica, la absorben como una esponja y la liberan lentamente durante los meses secos.</p><p>Ese equilibrio, construido durante miles de años, es frágil. Cuando el páramo se quema o se convierte en potrero, el suelo se compacta y pierde su capacidad de retención: el agua que antes se liberaba durante meses ahora corre en horas, causando crecientes en invierno y escasez en verano. Restaurar un páramo degradado puede tardar más de un siglo; un frailejón crece, en promedio, apenas un centímetro por año.</p>`;
+
+// ─── Figuras SVG estilo cuadernillo ───
+const FIG_EMPANADAS = `<div class="ctx-fig"><svg viewBox="0 0 340 190" role="img" aria-label="Gráfica de barras: empanadas vendidas por día">
+<line x1="40" y1="150" x2="330" y2="150" stroke="#94896E" stroke-width="1.5"/>
+<line x1="40" y1="108" x2="330" y2="108" stroke="#F1EAD2" stroke-width="1"/>
+<line x1="40" y1="66" x2="330" y2="66" stroke="#F1EAD2" stroke-width="1"/>
+<line x1="40" y1="24" x2="330" y2="24" stroke="#F1EAD2" stroke-width="1"/>
+<text x="34" y="154" font-size="10" fill="#94896E" text-anchor="end">0</text>
+<text x="34" y="112" font-size="10" fill="#94896E" text-anchor="end">30</text>
+<text x="34" y="70" font-size="10" fill="#94896E" text-anchor="end">60</text>
+<text x="34" y="28" font-size="10" fill="#94896E" text-anchor="end">90</text>
+<path d="M51 150 V98 Q51 94 55 94 H83 Q87 94 87 98 V150 Z" fill="#A67C00"/>
+<path d="M109 150 V77 Q109 73 113 73 H141 Q145 73 145 77 V150 Z" fill="#A67C00"/>
+<path d="M167 150 V91 Q167 87 171 87 H199 Q203 87 203 91 V150 Z" fill="#A67C00"/>
+<path d="M225 150 V56 Q225 52 229 52 H257 Q261 52 261 56 V150 Z" fill="#A67C00"/>
+<path d="M283 150 V28 Q283 24 287 24 H315 Q319 24 319 28 V150 Z" fill="#A67C00"/>
+<text x="69" y="88" font-size="11" font-weight="600" fill="#26221B" text-anchor="middle">40</text>
+<text x="127" y="67" font-size="11" font-weight="600" fill="#26221B" text-anchor="middle">55</text>
+<text x="185" y="81" font-size="11" font-weight="600" fill="#26221B" text-anchor="middle">45</text>
+<text x="243" y="46" font-size="11" font-weight="600" fill="#26221B" text-anchor="middle">70</text>
+<text x="301" y="18" font-size="11" font-weight="600" fill="#26221B" text-anchor="middle">90</text>
+<text x="69" y="167" font-size="11" fill="#6B6350" text-anchor="middle">Lun</text>
+<text x="127" y="167" font-size="11" fill="#6B6350" text-anchor="middle">Mar</text>
+<text x="185" y="167" font-size="11" fill="#6B6350" text-anchor="middle">Mié</text>
+<text x="243" y="167" font-size="11" fill="#6B6350" text-anchor="middle">Jue</text>
+<text x="301" y="167" font-size="11" fill="#6B6350" text-anchor="middle">Vie</text>
+<text x="185" y="185" font-size="10" fill="#94896E" text-anchor="middle">Empanadas vendidas por día</text>
+</svg></div>`;
+
+const FIG_CICLISTA = `<div class="ctx-fig"><svg viewBox="0 0 340 190" role="img" aria-label="Gráfica: distancia recorrida en función del tiempo">
+<line x1="40" y1="150" x2="330" y2="150" stroke="#94896E" stroke-width="1.5"/>
+<line x1="40" y1="150" x2="40" y2="20" stroke="#94896E" stroke-width="1.5"/>
+<line x1="40" y1="110" x2="330" y2="110" stroke="#F1EAD2" stroke-width="1"/>
+<line x1="40" y1="70" x2="330" y2="70" stroke="#F1EAD2" stroke-width="1"/>
+<line x1="40" y1="30" x2="330" y2="30" stroke="#F1EAD2" stroke-width="1"/>
+<text x="34" y="154" font-size="10" fill="#94896E" text-anchor="end">0</text>
+<text x="34" y="114" font-size="10" fill="#94896E" text-anchor="end">8</text>
+<text x="34" y="74" font-size="10" fill="#94896E" text-anchor="end">16</text>
+<text x="34" y="34" font-size="10" fill="#94896E" text-anchor="end">24</text>
+<text x="22" y="18" font-size="10" fill="#6B6350">km</text>
+<polyline points="40,150 152,90 208,90 320,30" fill="none" stroke="#A67C00" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="40" cy="150" r="4" fill="#A67C00" stroke="#fff" stroke-width="2"/>
+<circle cx="152" cy="90" r="4" fill="#A67C00" stroke="#fff" stroke-width="2"/>
+<circle cx="208" cy="90" r="4" fill="#A67C00" stroke="#fff" stroke-width="2"/>
+<circle cx="320" cy="30" r="4" fill="#A67C00" stroke="#fff" stroke-width="2"/>
+<text x="40" y="167" font-size="10" fill="#6B6350" text-anchor="middle">0</text>
+<text x="96" y="167" font-size="10" fill="#6B6350" text-anchor="middle">10</text>
+<text x="152" y="167" font-size="10" fill="#6B6350" text-anchor="middle">20</text>
+<text x="208" y="167" font-size="10" fill="#6B6350" text-anchor="middle">30</text>
+<text x="264" y="167" font-size="10" fill="#6B6350" text-anchor="middle">40</text>
+<text x="320" y="167" font-size="10" fill="#6B6350" text-anchor="middle">50</text>
+<text x="185" y="185" font-size="10" fill="#94896E" text-anchor="middle">Tiempo (minutos) — distancia recorrida (km)</text>
+</svg></div>`;
+
+const FIG_LOTE = `<div class="ctx-fig"><svg viewBox="0 0 340 210" role="img" aria-label="Figura: lote rectangular con jardín central y sendero perimetral">
+<rect x="50" y="20" width="240" height="160" fill="#fff" stroke="#26221B" stroke-width="2"/>
+<rect x="90" y="60" width="160" height="80" fill="#FCEFB8" stroke="#A67C00" stroke-width="2"/>
+<text x="170" y="105" font-size="13" font-weight="700" fill="#8F6B00" text-anchor="middle">Jardín</text>
+<text x="170" y="46" font-size="11" fill="#6B6350" text-anchor="middle">sendero · 2 m de ancho</text>
+<text x="170" y="200" font-size="12" font-weight="600" fill="#26221B" text-anchor="middle">12 m</text>
+<text x="34" y="100" font-size="12" font-weight="600" fill="#26221B" text-anchor="middle" transform="rotate(-90 34 100)">8 m</text>
+</svg></div>`;
+
+const TABLA_TAXI = `<table class="ctx-table"><tr><th>Kilómetros recorridos</th><th>Valor de la carrera</th></tr><tr><td>1 km</td><td>$ 7.000</td></tr><tr><td>2 km</td><td>$ 8.800</td></tr><tr><td>3 km</td><td>$ 10.600</td></tr><tr><td>4 km</td><td>$ 12.400</td></tr></table>`;
+
+const TABLA_JORNADA = `<table class="ctx-table"><tr><th></th><th>Mujeres</th><th>Hombres</th><th>Total</th></tr><tr><td>Sabatino</td><td>12</td><td>8</td><td>20</td></tr><tr><td>Intensivo</td><td>10</td><td>10</td><td>20</td></tr><tr><td><b>Total</b></td><td>22</td><td>18</td><td>40</td></tr></table>`;
+
+// ─── Bancos de preguntas por materia (formato extenso tipo ICFES) ───
+const BANKS = {
+  lc: [
+    {
+      comp: 'Propósito del texto',
+      ctxLabel: 'TEXTO · Responda las preguntas 1 a 3',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_SEMANA_SANTA,
+      text: 'El propósito principal del texto es',
+      opts: [
+        'presentar la tensión entre conservar una tradición viva y convertirla en un atractivo para el visitante.',
+        'narrar la historia de la fundación de Popayán y de sus iglesias coloniales.',
+        'convencer al lector de que asista como turista a las procesiones de Semana Santa.',
+        'explicar el procedimiento técnico con que se construyen los pasos de madera.',
+      ],
+      correct: 0,
+      exp: 'El texto describe la tradición en el primer párrafo y, en el segundo, la pone en tensión con la propuesta de «modernizarla» para el turismo. Esa oposición —lo que no cambia frente al espectáculo— es el eje que organiza todo el texto. Las demás opciones hablan de temas que el texto apenas roza o que no aparecen.',
+      tip: 'Para hallar el propósito, pregúntate qué idea conecta TODOS los párrafos, no solo el primero.',
+    },
+    {
+      comp: 'Función de expresiones',
+      ctxLabel: 'TEXTO · Responda las preguntas 1 a 3',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_SEMANA_SANTA,
+      text: 'En el texto, la expresión «una escenografía: un decorado que se mira, pero que ya no se hereda» cumple la función de',
+      opts: [
+        'ilustrar, mediante una analogía, el riesgo de que la procesión pierda su carácter de patrimonio vivo.',
+        'describir el estado actual de los pasos de madera que cargan los cargueros.',
+        'informar sobre los requisitos de la Unesco para mantener una declaratoria.',
+        'presentar la opinión de los turistas que visitan Popayán en Semana Santa.',
+      ],
+      correct: 0,
+      exp: 'La expresión compara la procesión «modernizada» con un decorado teatral: algo que se contempla pero no se transmite entre generaciones. Es una analogía que hace visible el riesgo del que advierten los cargueros. No describe un hecho real ni cita a la Unesco o a los turistas.',
+      tip: 'Cuando una pregunta dice «cumple la función de», busca qué hace esa expresión dentro del argumento: ¿ejemplifica, compara, refuta, define?',
+    },
+    {
+      comp: 'Inferencia',
+      ctxLabel: 'TEXTO · Responda las preguntas 1 a 3',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_SEMANA_SANTA,
+      text: 'Del texto puede inferirse que, para los cargueros, el valor de las procesiones depende de',
+      opts: [
+        'su continuidad y su transmisión de una generación a otra.',
+        'la cantidad de visitantes que atraigan cada año a la ciudad.',
+        'el reconocimiento económico que reciben quienes cargan los pasos.',
+        'la incorporación de elementos modernos que renueven la celebración.',
+      ],
+      correct: 0,
+      exp: 'El texto dice que los cargueros heredan el oficio «de sus padres y abuelos», que es un honor «que no se compra ni se vende» y que el valor reside «en aquello que no cambia». De esas tres pistas se infiere que lo que valoran es la continuidad heredada. Las opciones B y D contradicen su postura, y la C contradice el «no se compra ni se vende».',
+      tip: 'Una inferencia válida se apoya en varias pistas del texto a la vez; si una opción contradice una frase literal, descártala.',
+    },
+    {
+      comp: 'Información literal',
+      ctxLabel: 'TEXTO · Responda las preguntas 4 a 6',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_PARAMO,
+      text: 'Según el texto, el papel de los frailejones en el páramo consiste en',
+      opts: [
+        'capturar el agua de la niebla mediante las vellosidades de sus hojas.',
+        'absorber el agua como una esponja y compactar el suelo.',
+        'liberar el agua acumulada en cuestión de horas durante el invierno.',
+        'enriquecer el suelo con materia orgánica durante los meses secos.',
+      ],
+      correct: 0,
+      exp: 'El texto lo dice de forma literal: «los frailejones, con sus hojas cubiertas de vellosidades, capturan el agua de la niebla gota a gota». Absorber como esponja es función de los suelos (opción B las mezcla), y liberar el agua en horas es lo que ocurre cuando el páramo se degrada, no una función del frailejón.',
+      tip: 'En preguntas literales, vuelve al texto y verifica quién hace qué: los distractores suelen atribuirle a un elemento la función de otro.',
+    },
+    {
+      comp: 'Estructura del texto',
+      ctxLabel: 'TEXTO · Responda las preguntas 4 a 6',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_PARAMO,
+      text: 'En el segundo párrafo, la relación entre la quema del páramo y las crecientes de invierno se presenta como',
+      opts: [
+        'una relación de causa y efecto: al compactarse el suelo, el agua ya no se retiene y corre en horas.',
+        'una comparación entre dos ecosistemas de alta montaña.',
+        'una enumeración de fenómenos climáticos sin conexión entre sí.',
+        'una oposición entre la opinión de los campesinos y la de los científicos.',
+      ],
+      correct: 0,
+      exp: 'El párrafo sigue una cadena causal: quema → compactación del suelo → pérdida de retención → el agua corre en horas → crecientes y escasez. Reconocer esa cadena es entender cómo está construido el párrafo, no solo qué dice.',
+      tip: 'Marca los conectores y los dos puntos: en este párrafo, «cuando… se compacta y pierde…: el agua… corre en horas» encadena las causas.',
+    },
+    {
+      comp: 'Reflexionar y evaluar',
+      ctxLabel: 'TEXTO · Responda las preguntas 4 a 6',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_PARAMO,
+      text: '¿Cuál de las siguientes afirmaciones, de ser cierta, debilitaría el argumento central del texto?',
+      opts: [
+        'La mayor parte del agua de las ciudades andinas proviene de acuíferos profundos que no dependen de los páramos.',
+        'Los frailejones crecen, en promedio, un centímetro por año.',
+        'Los páramos ocupan menos del 2 % del territorio colombiano.',
+        'La niebla es un fenómeno frecuente en las faldas del volcán Puracé.',
+      ],
+      correct: 0,
+      exp: 'El argumento central es que los páramos son valiosos porque de ellos depende cerca del 70 % del agua de las ciudades andinas. Si esa agua viniera en realidad de acuíferos ajenos al páramo, el argumento perdería su base. Las opciones B y C repiten datos del propio texto y la D lo refuerza.',
+      tip: 'Para debilitar un argumento, ataca su premisa principal, no los detalles. Primero identifica qué afirmación sostiene todo lo demás.',
+    },
+  ],
+  mat: [
+    {
+      comp: 'Formulación y ejecución',
+      ctxLabel: 'SITUACIÓN · Pregunta 1',
+      ctxClass: 'ctx-sit',
+      context: `<p>Una empresa de taxis de Popayán cobra las carreras con una tarifa fija de arranque más un valor por cada kilómetro recorrido. La tabla muestra el valor total de una carrera según la distancia:</p>${TABLA_TAXI}`,
+      text: 'De acuerdo con la regularidad de la tabla, una carrera de 8 kilómetros cuesta',
+      opts: ['$ 19.600', '$ 14.400', '$ 24.800', '$ 17.800'],
+      correct: 0,
+      exp: 'Cada kilómetro adicional aumenta el valor en $1.800. La tarifa de arranque se obtiene restando: $7.000 − $1.800 = $5.200. Entonces una carrera de 8 km cuesta 5.200 + 8 × 1.800 = 5.200 + 14.400 = $19.600. La trampa de la opción B es olvidar la tarifa de arranque.',
+      tip: 'En tablas con patrón lineal, calcula primero cuánto cambia el valor entre filas: esa es la pendiente (el valor por kilómetro).',
+    },
+    {
+      comp: 'Interpretación de datos',
+      ctxLabel: 'SITUACIÓN · Pregunta 2',
+      ctxClass: 'ctx-sit',
+      context: `<p>Un puesto del centro de Popayán registró la cantidad de empanadas de pipián vendidas durante los cinco días de una semana laboral. Los resultados se muestran en la gráfica:</p>${FIG_EMPANADAS}`,
+      text: 'El promedio diario de empanadas vendidas durante esos cinco días fue',
+      opts: ['60', '55', '70', '90'],
+      correct: 0,
+      exp: 'Se suman las ventas de los cinco días: 40 + 55 + 45 + 70 + 90 = 300, y se divide entre 5: 300 ÷ 5 = 60. La opción B (55) es la mediana, no el promedio; la D (90) es el valor máximo. Son los distractores clásicos de esta pregunta.',
+      tip: 'No confundas promedio con mediana ni con el valor más alto: el promedio siempre exige sumar todo y dividir.',
+    },
+    {
+      comp: 'Interpretación de datos',
+      ctxLabel: 'SITUACIÓN · Pregunta 3',
+      ctxClass: 'ctx-sit',
+      context: `<p>Un ciclista entrena subiendo hacia el Morro de Tulcán y sus alrededores. La gráfica muestra la distancia total que ha recorrido en función del tiempo, durante 50 minutos de entrenamiento:</p>${FIG_CICLISTA}`,
+      text: 'De acuerdo con la gráfica, puede afirmarse que el ciclista estuvo detenido',
+      opts: [
+        'entre el minuto 20 y el minuto 30.',
+        'entre el minuto 0 y el minuto 20.',
+        'entre el minuto 30 y el minuto 50.',
+        'en ningún momento del entrenamiento.',
+      ],
+      correct: 0,
+      exp: 'En una gráfica de distancia contra tiempo, estar detenido se ve como un tramo horizontal: el tiempo avanza pero la distancia no cambia. Eso ocurre entre los minutos 20 y 30, cuando la distancia se mantiene en 12 km. En los otros tramos la línea sube, es decir, el ciclista avanza.',
+      tip: 'En gráficas distancia–tiempo: línea inclinada = movimiento, línea horizontal = detenido. La pendiente es la velocidad.',
+    },
+    {
+      comp: 'Formulación y ejecución',
+      ctxLabel: 'SITUACIÓN · Pregunta 4',
+      ctxClass: 'ctx-sit',
+      context: `<p>Un operador de telefonía ofrece dos planes de datos móviles:</p><p><b>Plan A:</b> $28.000 mensuales fijos, con navegación ilimitada.<br><b>Plan B:</b> un cargo básico de $10.000 mensuales, más $3.000 por cada gigabyte (GB) consumido.</p><p>Un estudiante quiere decidir cuál plan le conviene según su consumo mensual.</p>`,
+      text: '¿Para qué consumo mensual, en GB, los dos planes cuestan exactamente lo mismo?',
+      opts: ['6 GB', '4 GB', '9 GB', '13 GB'],
+      correct: 0,
+      exp: 'Se igualan los dos planes: 10.000 + 3.000x = 28.000. Entonces 3.000x = 18.000, y x = 6. Con menos de 6 GB conviene el plan B; con más de 6 GB conviene el plan A. Verificación: 10.000 + 3.000 × 6 = 28.000 ✓',
+      tip: 'Los problemas de «cuándo cuestan lo mismo» se resuelven igualando las dos expresiones y despejando la incógnita.',
+    },
+    {
+      comp: 'Razonamiento probabilístico',
+      ctxLabel: 'SITUACIÓN · Pregunta 5',
+      ctxClass: 'ctx-sit',
+      context: `<p>En un grupo de 40 estudiantes de un preuniversitario de Popayán se registró la jornada en la que estudian y su género. Los resultados se organizaron en la siguiente tabla:</p>${TABLA_JORNADA}`,
+      text: 'Si se elige un estudiante al azar, la probabilidad de que sea una mujer de la jornada sabatina es',
+      opts: ['3/10', '12/22', '1/2', '11/20'],
+      correct: 0,
+      exp: 'Los casos favorables son las mujeres del sabatino: 12. Los casos posibles son todos los estudiantes: 40. La probabilidad es 12/40 = 3/10. La opción B (12/22) sería la probabilidad de ser del sabatino DADO que es mujer (condicional), y la D (11/20) la de ser mujer de cualquier jornada.',
+      tip: 'Lee con cuidado sobre qué total se calcula la probabilidad: «elegido al azar del grupo» significa dividir entre los 40.',
+    },
+    {
+      comp: 'Razonamiento geométrico',
+      ctxLabel: 'SITUACIÓN · Pregunta 6',
+      ctxClass: 'ctx-sit',
+      context: `<p>En un lote rectangular de 12 m de largo por 8 m de ancho se construirá un jardín rectangular central, rodeado por un sendero de 2 m de ancho por los cuatro costados, como muestra la figura:</p>${FIG_LOTE}`,
+      text: 'El área del jardín central es',
+      opts: ['32 m²', '96 m²', '60 m²', '48 m²'],
+      correct: 0,
+      exp: 'El sendero quita 2 m por CADA lado: el jardín mide (12 − 2 − 2) × (8 − 2 − 2) = 8 × 4 = 32 m². La opción B (96 m²) es el área total del lote, y la C (60 m²) resulta de restar los 2 m una sola vez por dimensión: el error más común.',
+      tip: 'Cuando un borde rodea una figura por todos los costados, se resta dos veces por dimensión: una por cada lado.',
+    },
+  ],
+};
 
 const LETTERS = 'ABCD';
 const state = {
+  materia: 'lc',
+  bank: BANKS.lc,
   qIndex: 0,
-  answers: BANK.map(() => null),
+  answers: [],
   elapsed: 0,
   finished: 0,
   wrong: [],
@@ -387,6 +575,50 @@ function fmt(t) {
   return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
 }
 
+let demoToastTimer;
+function demoToast(msg) {
+  const t = document.getElementById('demo-toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  clearTimeout(demoToastTimer);
+  demoToastTimer = setTimeout(() => { t.style.display = 'none'; }, 2800);
+}
+
+// ─── Home: las 7 torres ───
+function buildHome() {
+  const box = document.getElementById('home-materias');
+  box.innerHTML = '';
+  MATERIAS.forEach(m => {
+    if (m.jugable) {
+      const card = document.createElement('div');
+      card.className = 'materia-play';
+      card.innerHTML =
+        '<div style="display: flex; align-items: center; gap: 13px;">' +
+          '<div class="area-badge" style="width: 44px; height: 44px;">' + m.sigla + '</div>' +
+          '<div style="flex: 1; min-width: 0;">' +
+            '<div style="font-size: 16px; font-weight: 700; color: #26221B;">' + m.nombre + '</div>' +
+            '<div style="font-size: 13px; color: #94896E;">Prof. ' + m.prof + ' · 6 preguntas tipo ICFES</div>' +
+          '</div>' +
+        '</div>' +
+        '<button class="btn-primary" style="padding: 14px;">Empezar cuestionario</button>';
+      card.querySelector('button').onclick = () => startQuiz(m.key);
+      box.appendChild(card);
+    } else {
+      const row = document.createElement('div');
+      row.className = 'materia-row';
+      row.innerHTML =
+        '<div class="area-badge">' + m.sigla + '</div>' +
+        '<div style="flex: 1; min-width: 0;">' +
+          '<div style="font-size: 15px; font-weight: 700; color: #26221B;">' + m.nombre + '</div>' +
+          '<div style="font-size: 13px; color: #94896E;">Prof. ' + m.prof + ' · ' + m.npreg + ' preguntas por cuestionario</div>' +
+        '</div>' +
+        '<div style="font-size: 13px; font-weight: 700; color: #2B2620; border: 1.5px solid #E4CD7A; border-radius: 999px; padding: 7px 15px; flex-shrink: 0;">Pendiente</div>';
+      row.onclick = () => demoToast('El cuestionario de ' + m.nombre + ' estará disponible en la versión completa');
+      box.appendChild(row);
+    }
+  });
+}
+
 // ─── Cuestionario ───
 setInterval(() => {
   if (document.getElementById('screen-quiz').classList.contains('active')) {
@@ -395,32 +627,39 @@ setInterval(() => {
   }
 }, 1000);
 
-function startQuiz() {
+function materiaNombre(key) {
+  return MATERIAS.find(m => m.key === key).nombre;
+}
+
+function startQuiz(key) {
+  state.materia = key;
+  state.bank = BANKS[key];
   state.qIndex = 0;
   state.elapsed = 0;
-  state.answers = BANK.map(() => null);
+  state.answers = state.bank.map(() => null);
   go('quiz');
   renderQuiz();
 }
 
 function renderQuiz() {
-  const q = BANK[state.qIndex];
+  const bank = state.bank;
+  const q = bank[state.qIndex];
   const sel = state.answers[state.qIndex];
   const answered = state.answers.filter(a => a != null).length;
-  const isLast = state.qIndex === BANK.length - 1;
+  const isLast = state.qIndex === bank.length - 1;
 
-  document.getElementById('q-area').textContent = q.area;
-  const tipoEl = document.getElementById('q-tipo');
-  tipoEl.textContent = q.tipo;
-  tipoEl.className = 'chip-fase ' + (q.tipo === 'Conceptual' ? 'concepto' : 'icfes');
-  document.getElementById('q-num').textContent = 'Pregunta ' + (state.qIndex + 1) + ' de ' + BANK.length;
+  document.getElementById('q-area').textContent = materiaNombre(state.materia);
+  document.getElementById('q-comp').textContent = q.comp;
+  document.getElementById('q-num').textContent = 'Pregunta ' + (state.qIndex + 1) + ' de ' + bank.length;
   document.getElementById('q-answered').textContent = answered + ' respondidas';
-  document.getElementById('q-progress').style.width = Math.round(answered / BANK.length * 100) + '%';
+  document.getElementById('q-progress').style.width = Math.round(answered / bank.length * 100) + '%';
   document.getElementById('q-clock').textContent = fmt(Math.max(0, 720 - state.elapsed));
 
+  document.getElementById('q-context-label').textContent = q.ctxLabel;
   const ctx = document.getElementById('q-context');
-  ctx.style.display = q.context ? 'block' : 'none';
-  ctx.textContent = q.context || '';
+  ctx.className = q.ctxClass;
+  ctx.innerHTML = q.context;
+  document.getElementById('q-context-block').scrollTop = 0;
   document.getElementById('q-text').textContent = q.text;
 
   const box = document.getElementById('q-opts');
@@ -446,7 +685,7 @@ function quizPrev() {
 
 function quizNext() {
   if (state.answers[state.qIndex] == null) return;
-  if (state.qIndex === BANK.length - 1) {
+  if (state.qIndex === state.bank.length - 1) {
     state.finished = state.elapsed;
     showResults();
   } else {
@@ -457,12 +696,14 @@ function quizNext() {
 
 // ─── Resultados ───
 function showResults() {
-  const graded = BANK.map((q, i) => ({ q, idx: i, a: state.answers[i] }));
+  const bank = state.bank;
+  const graded = bank.map((q, i) => ({ q, idx: i, a: state.answers[i] }));
   state.wrong = graded.filter(x => x.a !== x.q.correct);
-  const correct = BANK.length - state.wrong.length;
-  const pct = Math.round(correct / BANK.length * 100);
+  const correct = bank.length - state.wrong.length;
+  const pct = Math.round(correct / bank.length * 100);
   const G = '#A67C00', R = '#C24B3A';
 
+  document.getElementById('r-sub').textContent = 'Cuestionario de ' + materiaNombre(state.materia) + ' · ' + bank.length + ' preguntas';
   document.getElementById('r-title').textContent =
     pct === 100 ? '¡Impecable, Valentina!' : pct >= 60 ? '¡Buen trabajo, Valentina!' : 'Sigue practicando, Valentina';
   document.getElementById('r-ring').style.background = 'conic-gradient(' + G + ' 0% ' + pct + '%, #EDE3C2 ' + pct + '% 100%)';
@@ -474,8 +715,9 @@ function showResults() {
 
   const areas = document.getElementById('r-areas');
   areas.innerHTML = '';
-  ['Matemáticas', 'Lectura Crítica'].forEach(name => {
-    const items = graded.filter(x => x.q.area === name);
+  const comps = [...new Set(bank.map(q => q.comp))];
+  comps.forEach(name => {
+    const items = graded.filter(x => x.q.comp === name);
     const ok = items.filter(x => x.a === x.q.correct).length;
     const p = items.length ? ok / items.length : 0;
     const color = p >= 0.67 ? G : R;
@@ -509,9 +751,14 @@ function renderReview() {
   const rv = wrong[state.reviewIdx];
   const isLast = state.reviewIdx >= wrong.length - 1;
 
-  document.getElementById('rv-area').textContent = rv.q.area;
+  document.getElementById('rv-area').textContent = materiaNombre(state.materia);
   document.getElementById('rv-pos').textContent = 'Fallada ' + (state.reviewIdx + 1) + ' de ' + wrong.length;
-  document.getElementById('rv-num').textContent = 'Pregunta ' + (rv.idx + 1);
+  document.getElementById('rv-context-label').textContent = rv.q.ctxLabel;
+  const ctx = document.getElementById('rv-context');
+  ctx.className = rv.q.ctxClass;
+  ctx.innerHTML = rv.q.context;
+  document.getElementById('rv-context-block').scrollTop = 0;
+  document.getElementById('rv-num').textContent = 'Pregunta ' + (rv.idx + 1) + ' · ' + rv.q.comp;
   document.getElementById('rv-text').textContent = rv.q.text;
   document.getElementById('rv-your-letter').textContent = LETTERS[rv.a];
   document.getElementById('rv-your-text').textContent = rv.q.opts[rv.a];
@@ -571,7 +818,7 @@ function teacherSave() {
   state.tCorrect = 0;
   document.querySelectorAll('.t-opt-row').forEach((r, j) => r.classList.toggle('correct', j === 0));
   const toast = document.getElementById('t-toast');
-  toast.textContent = 'Pregunta guardada en el banco · ' + (state.tSaved === 1 ? '1 pregunta nueva' : state.tSaved + ' preguntas nuevas');
+  toast.textContent = 'Pregunta guardada en la torre de Lectura Crítica · ' + (state.tSaved === 1 ? '1 pregunta nueva' : state.tSaved + ' preguntas nuevas');
   toast.style.display = 'block';
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toast.style.display = 'none'; }, 3500);
@@ -583,6 +830,7 @@ function teacherSave() {
   document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') go('home'); });
 });
 
+buildHome();
 buildTeacherOpts();
 teacherRefresh();
 </script>
