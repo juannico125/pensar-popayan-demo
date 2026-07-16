@@ -370,9 +370,13 @@ const FIG_LOTE = `<div class="ctx-fig"><svg viewBox="0 0 340 210" role="img" ari
 <text x="34" y="100" font-size="12" font-weight="600" fill="#26221B" text-anchor="middle" transform="rotate(-90 34 100)">8 m</text>
 </svg></div>`;
 
-const TABLA_TAXI = `<table class="ctx-table"><tr><th>Kilómetros recorridos</th><th>Valor de la carrera</th></tr><tr><td>1 km</td><td>$ 7.000</td></tr><tr><td>2 km</td><td>$ 8.800</td></tr><tr><td>3 km</td><td>$ 10.600</td></tr><tr><td>4 km</td><td>$ 12.400</td></tr></table>`;
-
 const TABLA_JORNADA = `<table class="ctx-table"><tr><th></th><th>Mujeres</th><th>Hombres</th><th>Total</th></tr><tr><td>Sabatino</td><td>12</td><td>8</td><td>20</td></tr><tr><td>Intensivo</td><td>10</td><td>10</td><td>20</td></tr><tr><td><b>Total</b></td><td>22</td><td>18</td><td>40</td></tr></table>`;
+
+const TABLA_PUNTAJES = `<table class="ctx-table"><tr><th>Estudiante</th><th>Puntaje (0–500)</th></tr><tr><td>Ana</td><td>280</td></tr><tr><td>Beto</td><td>300</td></tr><tr><td>Carlos</td><td>310</td></tr><tr><td>Diana</td><td>340</td></tr><tr><td>Elena</td><td>350</td></tr></table>`;
+
+const PASAJE_LECTURA = `<p>Se repite con frecuencia que los jóvenes ya no leen. La afirmación, sin embargo, confunde leer con leer libros. Un adolescente que pasa la tarde entre mensajes, publicaciones y videos con subtítulos lee, en realidad, miles de palabras al día; lo que ha cambiado no es la cantidad de lectura, sino su forma: fragmentada, veloz, saltando de un estímulo a otro.</p><p>El problema no es entonces que se lea poco, sino que se ha vuelto difícil sostener la atención sobre un texto largo, seguir un argumento que se despliega a lo largo de muchas páginas y exige paciencia. Y esa lectura profunda —la que permite comprender ideas complejas y formarse un criterio propio— sigue siendo insustituible.</p>`;
+
+const PASAJE_BICI = `<p>Cada mañana, miles de payaneses dedican más de una hora a trasladarse por una ciudad que se puede cruzar en bicicleta en veinte minutos. Insistimos en llenar de carros unas calles coloniales que nunca fueron pensadas para ellos, mientras el aire que respiran nuestros hijos se vuelve, año tras año, un poco más pesado.</p><p>No se trata de renunciar al automóvil de un día para otro, sino de preguntarnos, honestamente, cuántos de esos trayectos podríamos hacer de otro modo. La ciudad que queremos dejarles a quienes vienen detrás empieza por una decisión tan pequeña como la de hoy.</p>`;
 
 // ─── Bancos de preguntas por materia (formato extenso tipo ICFES) ───
 const BANKS = {
@@ -473,22 +477,75 @@ const BANKS = {
       exp: 'El argumento central es que los páramos son valiosos porque de ellos depende cerca del 70 % del agua de las ciudades andinas. Si esa agua viniera en realidad de acuíferos ajenos al páramo, el argumento perdería su base. Las opciones B y C repiten datos del propio texto y la D lo refuerza.',
       tip: 'Para debilitar un argumento, ataca su premisa principal, no los detalles. Primero identifica qué afirmación sostiene todo lo demás.',
     },
+    {
+      comp: 'Estructura del texto',
+      ctxLabel: 'TEXTO · Responda las preguntas 7 y 8',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_LECTURA,
+      text: 'La idea que el autor defiende a lo largo del texto es que',
+      opts: [
+        'los jóvenes no leen menos que antes, pero han perdido la capacidad de leer de forma profunda y sostenida.',
+        'los jóvenes de hoy leen muchos más libros que las generaciones anteriores.',
+        'la lectura en pantallas debería prohibirse porque perjudica la comprensión.',
+        'leer mensajes y publicaciones equivale a leer libros completos.',
+      ],
+      correct: 0,
+      exp: 'El autor concede que los jóvenes sí leen («miles de palabras al día»), pero aclara que «el problema no es que se lea poco, sino que se ha vuelto difícil sostener la atención sobre un texto largo». Esa distinción —cantidad frente a profundidad— es la tesis. B y D exageran, y C atribuye al autor una prohibición que no plantea.',
+      tip: 'La tesis suele aparecer tras un «sin embargo» o un «el problema no es… sino…»: es la idea que el autor sostiene frente a lo que otros afirman.',
+    },
+    {
+      comp: 'Semántica y léxico',
+      ctxLabel: 'TEXTO · Responda las preguntas 7 y 8',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_LECTURA,
+      text: 'En el texto, la palabra «insustituible», referida a la lectura profunda, indica que esta',
+      opts: [
+        'no puede ser reemplazada por otras formas de lectura más rápidas.',
+        'está a punto de desaparecer entre los jóvenes.',
+        'resulta más entretenida que la lectura en pantallas.',
+        'solo se logra leyendo libros impresos en papel.',
+      ],
+      correct: 0,
+      exp: '«Insustituible» significa que no tiene sustituto: el autor afirma que la lectura profunda, la que forma criterio propio, no puede ser reemplazada por la lectura fragmentada. No dice que vaya a desaparecer (B), ni la compara por entretenimiento (C), ni la limita al papel (D).',
+      tip: 'Cuando preguntan por el significado de una palabra «en el texto», reemplázala mentalmente por un sinónimo y verifica que la frase conserve el sentido.',
+    },
+    {
+      comp: 'Intención del autor',
+      ctxLabel: 'TEXTO · Responda las preguntas 9 y 10',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_BICI,
+      text: 'La intención principal del autor en este fragmento es',
+      opts: [
+        'persuadir al lector de reconsiderar el uso del automóvil para trayectos cortos en la ciudad.',
+        'informar sobre las rutas de ciclovía disponibles en Popayán.',
+        'narrar un recorrido en bicicleta por el centro histórico.',
+        'describir el estado de las calles coloniales de la ciudad.',
+      ],
+      correct: 0,
+      exp: 'El autor usa preguntas dirigidas al lector («preguntarnos, honestamente…»), un llamado al futuro («la ciudad que queremos dejarles») y expresiones valorativas («el aire… más pesado»). Ese conjunto de recursos busca convencer, no solo informar o narrar. La intención es persuadir.',
+      tip: 'Los verbos en primera persona plural («insistimos», «queremos») y las preguntas al lector delatan un texto que busca persuadir.',
+    },
+    {
+      comp: 'Reflexionar y evaluar',
+      ctxLabel: 'TEXTO · Responda las preguntas 9 y 10',
+      ctxClass: 'ctx-pasaje',
+      context: PASAJE_BICI,
+      text: 'De la expresión «la ciudad que queremos dejarles a quienes vienen detrás» puede inferirse que el autor apela a',
+      opts: [
+        'la responsabilidad con las generaciones futuras.',
+        'la nostalgia por el pasado colonial de la ciudad.',
+        'el ahorro económico de quienes usan bicicleta.',
+        'la obligación legal de reducir el uso del automóvil.',
+      ],
+      correct: 0,
+      exp: '«Quienes vienen detrás» son las generaciones futuras; hablar de la ciudad que se les «deja» apela a la responsabilidad hacia ellas. No evoca nostalgia (B), ni menciona ahorro (C), ni una obligación legal (D): el llamado es ético, no jurídico.',
+      tip: 'Fíjate en a qué valor apela el autor (el futuro, la justicia, la salud): las inferencias sobre intención se apoyan en esas señales del propio texto.',
+    },
   ],
   mat: [
     {
-      comp: 'Formulación y ejecución',
-      ctxLabel: 'SITUACIÓN · Pregunta 1',
-      ctxClass: 'ctx-sit',
-      context: `<p>Una empresa de taxis de Popayán cobra las carreras con una tarifa fija de arranque más un valor por cada kilómetro recorrido. La tabla muestra el valor total de una carrera según la distancia:</p>${TABLA_TAXI}`,
-      text: 'De acuerdo con la regularidad de la tabla, una carrera de 8 kilómetros cuesta',
-      opts: ['$ 19.600', '$ 14.400', '$ 24.800', '$ 17.800'],
-      correct: 0,
-      exp: 'Cada kilómetro adicional aumenta el valor en $1.800. La tarifa de arranque se obtiene restando: $7.000 − $1.800 = $5.200. Entonces una carrera de 8 km cuesta 5.200 + 8 × 1.800 = 5.200 + 14.400 = $19.600. La trampa de la opción B es olvidar la tarifa de arranque.',
-      tip: 'En tablas con patrón lineal, calcula primero cuánto cambia el valor entre filas: esa es la pendiente (el valor por kilómetro).',
-    },
-    {
       comp: 'Interpretación de datos',
-      ctxLabel: 'SITUACIÓN · Pregunta 2',
+      ctxLabel: 'SITUACIÓN · Pregunta 1',
       ctxClass: 'ctx-sit',
       context: `<p>Un puesto del centro de Popayán registró la cantidad de empanadas de pipián vendidas durante los cinco días de una semana laboral. Los resultados se muestran en la gráfica:</p>${FIG_EMPANADAS}`,
       text: 'El promedio diario de empanadas vendidas durante esos cinco días fue',
@@ -499,7 +556,7 @@ const BANKS = {
     },
     {
       comp: 'Interpretación de datos',
-      ctxLabel: 'SITUACIÓN · Pregunta 3',
+      ctxLabel: 'SITUACIÓN · Pregunta 2',
       ctxClass: 'ctx-sit',
       context: `<p>Un ciclista entrena subiendo hacia el Morro de Tulcán y sus alrededores. La gráfica muestra la distancia total que ha recorrido en función del tiempo, durante 50 minutos de entrenamiento:</p>${FIG_CICLISTA}`,
       text: 'De acuerdo con la gráfica, puede afirmarse que el ciclista estuvo detenido',
@@ -514,19 +571,8 @@ const BANKS = {
       tip: 'En gráficas distancia–tiempo: línea inclinada = movimiento, línea horizontal = detenido. La pendiente es la velocidad.',
     },
     {
-      comp: 'Formulación y ejecución',
-      ctxLabel: 'SITUACIÓN · Pregunta 4',
-      ctxClass: 'ctx-sit',
-      context: `<p>Un operador de telefonía ofrece dos planes de datos móviles:</p><p><b>Plan A:</b> $28.000 mensuales fijos, con navegación ilimitada.<br><b>Plan B:</b> un cargo básico de $10.000 mensuales, más $3.000 por cada gigabyte (GB) consumido.</p><p>Un estudiante quiere decidir cuál plan le conviene según su consumo mensual.</p>`,
-      text: '¿Para qué consumo mensual, en GB, los dos planes cuestan exactamente lo mismo?',
-      opts: ['6 GB', '4 GB', '9 GB', '13 GB'],
-      correct: 0,
-      exp: 'Se igualan los dos planes: 10.000 + 3.000x = 28.000. Entonces 3.000x = 18.000, y x = 6. Con menos de 6 GB conviene el plan B; con más de 6 GB conviene el plan A. Verificación: 10.000 + 3.000 × 6 = 28.000 ✓',
-      tip: 'Los problemas de «cuándo cuestan lo mismo» se resuelven igualando las dos expresiones y despejando la incógnita.',
-    },
-    {
       comp: 'Razonamiento probabilístico',
-      ctxLabel: 'SITUACIÓN · Pregunta 5',
+      ctxLabel: 'SITUACIÓN · Pregunta 3',
       ctxClass: 'ctx-sit',
       context: `<p>En un grupo de 40 estudiantes de un preuniversitario de Popayán se registró la jornada en la que estudian y su género. Los resultados se organizaron en la siguiente tabla:</p>${TABLA_JORNADA}`,
       text: 'Si se elige un estudiante al azar, la probabilidad de que sea una mujer de la jornada sabatina es',
@@ -537,7 +583,7 @@ const BANKS = {
     },
     {
       comp: 'Razonamiento geométrico',
-      ctxLabel: 'SITUACIÓN · Pregunta 6',
+      ctxLabel: 'SITUACIÓN · Pregunta 4',
       ctxClass: 'ctx-sit',
       context: `<p>En un lote rectangular de 12 m de largo por 8 m de ancho se construirá un jardín rectangular central, rodeado por un sendero de 2 m de ancho por los cuatro costados, como muestra la figura:</p>${FIG_LOTE}`,
       text: 'El área del jardín central es',
@@ -545,6 +591,72 @@ const BANKS = {
       correct: 0,
       exp: 'El sendero quita 2 m por CADA lado: el jardín mide (12 − 2 − 2) × (8 − 2 − 2) = 8 × 4 = 32 m². La opción B (96 m²) es el área total del lote, y la C (60 m²) resulta de restar los 2 m una sola vez por dimensión: el error más común.',
       tip: 'Cuando un borde rodea una figura por todos los costados, se resta dos veces por dimensión: una por cada lado.',
+    },
+    {
+      comp: 'Formulación y ejecución',
+      ctxLabel: 'SITUACIÓN · Pregunta 5',
+      ctxClass: 'ctx-sit',
+      context: `<p>En una papelería del centro de Popayán, un cuaderno cuesta $12.000. Durante la temporada escolar, la papelería ofrece un descuento del 25 % sobre ese precio a quienes compran tres o más cuadernos.</p>`,
+      text: 'Una estudiante compra cuatro cuadernos durante la temporada escolar. ¿Cuánto paga en total?',
+      opts: ['$36.000', '$48.000', '$12.000', '$9.000'],
+      correct: 0,
+      exp: 'Con 25 % de descuento se paga el 75 % del precio: 0,75 × 12.000 = $9.000 por cuaderno. Por cuatro cuadernos: 4 × 9.000 = $36.000. La opción B ($48.000) es el precio sin descuento, y la D ($9.000) es el valor de un solo cuaderno.',
+      tip: 'Pagar con un 25 % de descuento equivale a pagar el 75 %: multiplica el precio por 0,75 y no olvides la cantidad.',
+    },
+    {
+      comp: 'Formulación y ejecución',
+      ctxLabel: 'SITUACIÓN · Pregunta 6',
+      ctxClass: 'ctx-sit',
+      context: `<p>Dos gimnasios de la ciudad ofrecen planes distintos. El gimnasio A cobra una matrícula de $40.000 más $30.000 por cada mes. El gimnasio B no cobra matrícula, pero cobra $50.000 por cada mes.</p>`,
+      text: '¿En cuántos meses los dos planes cuestan exactamente lo mismo?',
+      opts: ['2 meses', '4 meses', '1 mes', '8 meses'],
+      correct: 0,
+      exp: 'Se igualan los dos planes: 40.000 + 30.000·m = 50.000·m → 40.000 = 20.000·m → m = 2. A los 2 meses ambos cuestan $100.000; a partir de ahí, el gimnasio A resulta más económico. Verificación: 40.000 + 30.000×2 = 100.000 = 50.000×2 ✓',
+      tip: 'Los problemas de «cuándo cuestan lo mismo» se resuelven igualando las dos expresiones y despejando la incógnita.',
+    },
+    {
+      comp: 'Formulación y ejecución',
+      ctxLabel: 'SITUACIÓN · Pregunta 7',
+      ctxClass: 'ctx-sit',
+      context: `<p>La receta tradicional del pipián para 6 empanadas necesita 300 gramos de papa. Un vendedor quiere preparar 20 empanadas usando la misma receta, sin cambiar las proporciones.</p>`,
+      text: '¿Cuántos gramos de papa necesita?',
+      opts: ['1.000 g', '900 g', '600 g', '360 g'],
+      correct: 0,
+      exp: 'Si 6 empanadas necesitan 300 g, cada empanada necesita 300 ÷ 6 = 50 g. Para 20 empanadas: 20 × 50 = 1.000 g. También por regla de tres: (300 × 20) ÷ 6 = 6.000 ÷ 6 = 1.000 g.',
+      tip: 'En una regla de tres directa, halla primero el valor por unidad (gramos por empanada) y multiplícalo por la cantidad pedida.',
+    },
+    {
+      comp: 'Formulación y ejecución',
+      ctxLabel: 'SITUACIÓN · Pregunta 8',
+      ctxClass: 'ctx-sit',
+      context: `<p>En un salón de un preuniversitario, el número de estudiantes mujeres es el doble del número de estudiantes hombres. En total hay 33 estudiantes.</p>`,
+      text: '¿Cuántos hombres hay en el salón?',
+      opts: ['11', '22', '16', '33'],
+      correct: 0,
+      exp: 'Si hay h hombres, hay 2h mujeres. En total: h + 2h = 33 → 3h = 33 → h = 11. Entonces hay 11 hombres y 22 mujeres. La opción B (22) es el número de mujeres, no de hombres.',
+      tip: 'Traduce el enunciado a una ecuación: «el doble» significa multiplicar por 2. Define la incógnita según lo que preguntan.',
+    },
+    {
+      comp: 'Interpretación de datos',
+      ctxLabel: 'SITUACIÓN · Pregunta 9',
+      ctxClass: 'ctx-sit',
+      context: `<p>La tabla muestra el puntaje que obtuvieron cinco estudiantes en el último simulacro tipo Saber 11, en escala de 0 a 500:</p>${TABLA_PUNTAJES}`,
+      text: 'La mediana de los puntajes obtenidos por los cinco estudiantes es',
+      opts: ['310', '316', '350', '280'],
+      correct: 0,
+      exp: 'La mediana es el valor central al ordenar los datos de menor a mayor: 280, 300, 310, 340, 350. El valor del medio es 310 (el puntaje de Carlos). Ojo: 316 es el promedio, no la mediana; conviene no confundirlos.',
+      tip: 'Para hallar la mediana, primero ordena los datos y ubica el del centro; con cinco datos, es el tercero.',
+    },
+    {
+      comp: 'Razonamiento geométrico',
+      ctxLabel: 'SITUACIÓN · Pregunta 10',
+      ctxClass: 'ctx-sit',
+      context: `<p>Una cancha de microfútbol tiene forma rectangular. Su largo mide 40 metros y su ancho, 20 metros. Se quiere cercar todo su contorno con malla.</p>`,
+      text: '¿Cuántos metros de malla se necesitan para cercar el contorno completo de la cancha?',
+      opts: ['120 m', '800 m', '60 m', '240 m'],
+      correct: 0,
+      exp: 'Cercar el contorno es hallar el perímetro: P = 2 × (largo + ancho) = 2 × (40 + 20) = 2 × 60 = 120 m. La opción B (800) corresponde al área (40 × 20), no al perímetro, y está en unidades distintas (m²).',
+      tip: 'Cercar o bordear una figura pide el perímetro (suma de los lados); cubrir o llenar su superficie pide el área.',
     },
   ],
 };
@@ -597,7 +709,7 @@ function buildHome() {
           '<div class="area-badge" style="width: 44px; height: 44px;">' + m.sigla + '</div>' +
           '<div style="flex: 1; min-width: 0;">' +
             '<div style="font-size: 16px; font-weight: 700; color: #26221B;">' + m.nombre + '</div>' +
-            '<div style="font-size: 13px; color: #94896E;">Prof. ' + m.prof + ' · 6 preguntas tipo ICFES</div>' +
+            '<div style="font-size: 13px; color: #94896E;">Prof. ' + m.prof + ' · ' + BANKS[m.key].length + ' preguntas tipo ICFES</div>' +
           '</div>' +
         '</div>' +
         '<button class="btn-primary" style="padding: 14px;">Empezar cuestionario</button>';
