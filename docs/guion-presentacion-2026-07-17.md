@@ -1,4 +1,4 @@
-# Guion de presentación — Pensar Preuniversitario
+ # Guion de presentación — Pensar Preuniversitario
 
 **Viernes 17 de julio de 2026** · Interlocutor: técnico, entiende de software.
 
@@ -14,11 +14,13 @@ La sección 7 es lo que tienes que salir sabiendo: las preguntas que TÚ haces.
 
 Regla de oro para todo el documento: **el demo es una maqueta, el producto real no existe todavía para Pensar, pero sí existe y está en producción para otro instituto.** Nunca inviertas ese orden ni lo maquilles. Un cliente técnico detecta el humo en dos preguntas, y ahí pierdes la venta. Lo que vendes es criterio y ejecución demostrada, no un producto terminado.
 
+**Nota sobre el estado del demo hoy:** son dos maquetas separadas, a propósito. La app del estudiante ([pensar-popayan-app](https://juannico125.github.io/pensar-popayan-app/), local en `C:\Users\futun\Desktop\pensar-popayan-app\index.html`) es una segunda pasada de diseño, más pulida y con animaciones — la que muestras primero. El panel del instituto ([panel.html](../panel.html)) sigue en la versión original, todavía no rediseñada. No lo escondas: si preguntan por qué se ven distintos, es exactamente la respuesta de arriba — es una exploración de diseño en curso, no un descuido.
+
 ---
 
 ## 1. La versión de 30 segundos
 
-> "Esto que les voy a mostrar es una maqueta navegable, no el producto. Todo está en duro: no hay base de datos, no hay backend, si recargan la página se reinicia. La construí así a propósito, para que ustedes vean y toquen exactamente lo que les propongo antes de que nadie invierta un peso en construirlo. La arquitectura real que hay detrás de esta propuesta ya la tengo funcionando en producción en otro instituto de Popayán, sobre Supabase y Cloudflare. Lo que estamos decidiendo hoy no es si la tecnología funciona: es si *este* producto es el que ustedes necesitan."
+> "Esto que les voy a mostrar es una maqueta navegable, no el producto. No hay backend ni base de datos: todo el estado vive en la memoria del navegador, en las dos pantallas. Si recargan la página, todo vuelve al estado inicial — en la app del estudiante eso significa que vuelve a ver una semana de actividad de muestra, no que quede en cero. La construí así a propósito, para que ustedes vean y toquen exactamente lo que les propongo antes de que nadie invierta un peso en construirlo. La arquitectura real que hay detrás de esta propuesta ya la tengo funcionando en producción en otro instituto de Popayán, sobre Supabase y Cloudflare. Lo que estamos decidiendo hoy no es si la tecnología funciona: es si *este* producto es el que ustedes necesitan."
 
 Esa apertura hace tres cosas: te blinda contra "¿esto ya funciona?", establece que tienes experiencia real, y convierte la reunión en una conversación de producto en vez de una demo de ventas.
 
@@ -32,49 +34,57 @@ Tiempo total objetivo: **12 a 15 minutos de demo**, el resto conversación. No n
 
 Di la versión de 30 segundos de arriba. Luego:
 
-> "Lo armé alrededor de los dos requerimientos que me dieron el lunes: las 7 materias con banco por profesor, y las preguntas tipo ICFES de verdad, largas, cargadas con IA desde sus propios cuadernillos. Empecemos por el estudiante."
+> "Lo armé alrededor de los dos requerimientos que me dieron el lunes: las 7 materias con banco por profesor, y las preguntas tipo ICFES de verdad, largas, salidas de sus propios cuadernillos. Empecemos por el estudiante, con la versión de diseño más reciente."
 
 ### Bloque 1 — App del estudiante (5 minutos)
 
-Abre [index.html](../index.html).
+Abre **https://juannico125.github.io/pensar-popayan-app/** (o el `index.html` local de esa carpeta si no hay internet en el sitio).
 
-**Paso 1 — Pantalla de login.** Se ve la marca Pensar.
+**Paso 1 — Splash y login.** Se ve la marca Pensar, el correo y la contraseña ya vienen prellenados.
 
-> "El estudiante entra con su código de instituto, no con email. Secretaría los administra."
+> "Este login es correo y contraseña solo para que la demo sea rápida. En el producto real puede ser código de institución en vez de correo, como hablábamos — es un detalle de configuración, no de arquitectura. Secretaría sigue administrando los accesos."
 
-**Paso 2 — Clic en "Ingresar".** Llegas al Home con las 7 torres.
+**Paso 2 — Clic en "Ingresar".** Llegas al Home.
 
-> "Aquí están las 7 torres, cada una con el nombre de su profesor y el número de preguntas que ustedes me dieron: Matemáticas 36, Lectura Crítica 36, Sociales 36, Inglés 40, Biología 20, Física 20, Química 20."
+> "Aquí están las 7 materias, cada una con el nombre de su profesor. Lectura Crítica y Matemáticas son las que están jugables en este demo, con 10 preguntas extensas cada una, tipo ICFES de verdad. Las otras cinco muestran el número que ustedes me dieron — Sociales 36, Inglés 40, Biología 20, Física 20, Química 20 — pero todavía no tienen banco cargado en la maqueta."
 
-**Paso 3 — Señala la tarjeta de "Simulacro completo · 208 preguntas".**
+Si tocas una materia bloqueada por accidente, sale un aviso de "estará disponible en la versión completa". No te disculpes, es intencional — mismo criterio que en el panel.
 
-> "El simulacro completo agrega las 7 y suma 208. Ese número me lo dieron ustedes y quiero volver sobre él al final, porque no me cuadra con otro que me dieron."
+**Paso 3 — Señala el bloque "Tu semana" arriba del todo, y la racha 🔥.**
 
-**Paso 4 — Clic en "Lectura Crítica".** Deja que el pasaje cargue en pantalla y **cállate tres segundos**. Que lo lean.
+> "Esto no lo estoy jugando en vivo: es una semana de actividad de muestra, para que vean cómo se ve la app ya en uso — racha de días, precisión, tiempo estudiado. Es el tipo de dato que le importa a un coordinador, no solo al estudiante."
+
+**Paso 4 — Clic en "Lectura Crítica".** Pantalla de introducción a la materia, luego "Iniciar práctica". Deja que el pasaje cargue en pantalla y **cállate tres segundos**. Que lo lean.
 
 **Paso 5 — Cuando alguien reaccione al largo del texto:**
 
-> "Esto es lo que ustedes pidieron y es la parte más difícil de todo el proyecto. No es una pregunta de trivia con cuatro opciones cortas: es un pasaje de 200 palabras y tres preguntas que dependen de él, como en el cuadernillo real. Los distractores son plausibles, no de relleno."
+> "Esto es lo que ustedes pidieron y es la parte más difícil de todo el proyecto. No es una pregunta de trivia con cuatro opciones cortas: es un pasaje de 200 palabras y varias preguntas que dependen de él, como en el cuadernillo real. Los distractores son plausibles, no de relleno."
 
-**Paso 6 — Responde dos o tres preguntas, incluida una mal a propósito.**
+**Paso 6 — Responde dos o tres preguntas, incluida una mal a propósito.** La retroalimentación sale en una tarjeta que sube desde abajo, no en otra pantalla.
 
-**Paso 7 — Pantalla de Resultados.**
+> "Aquí está el valor pedagógico real: la explicación de por qué la correcta es correcta *y* por qué la que elegiste es un error típico, más un tip. Esa explicación es contenido, no software. Vuelvo a eso en un minuto."
 
-> "Desglose por competencia, no solo por materia. Saber en qué falló sirve; saber que sacó 4 de 6 no sirve."
+**Paso 7 — Termina la sesión de 5 preguntas. Pantalla de Resultados.**
 
-**Paso 8 — Clic en "Revisar" sobre la que fallaste.**
+> "Precisión, aciertos, tiempo y experiencia ganada. Y fíjense que la que fallé no se pierde."
 
-> "Aquí está el valor pedagógico real: la explicación de por qué la correcta es correcta *y* por qué la que eligió es un error típico. Esa explicación es contenido, no software. Vuelvo a eso en un minuto."
+**Paso 8 — Baja a la barra inferior y toca "Errores", luego "Repasar".**
 
-**Paso 9 — Vuelve al login y clic en "Ver panel del instituto (web)".**
+> "Cada error queda guardado con repetición espaciada — 1, 3, 7, 15, 30 y 90 días, el mismo principio que usan las apps de idiomas. No es 'volvé a intentar cuando quieras', es un plan. Esto no existía en la primera versión del demo."
 
-> "Ese es el lado del estudiante. Ahora el de ustedes."
+**Paso 9 — Toca "Progreso" y "Perfil" rápido, sin detenerte.**
 
-Si te piden ver Matemáticas, muéstrala: tiene gráficas SVG embebidas. Buen momento para decir: *"las gráficas están hechas en SVG dentro del mismo archivo, sin librerías y sin imágenes externas. Eso importa para el estudiante que abre esto en un gama baja con datos."*
+> "Precisión por materia, racha, nivel y logros. Es gamificación real, no cosmética: el objetivo es que el estudiante vuelva solo, sin que el profesor tenga que perseguirlo."
+
+**Paso 10 — Abre en otra pestaña el panel del instituto** ([panel.html](../panel.html)).
+
+> "Ese es el lado del estudiante, en su diseño más reciente. Ahora el de ustedes — este todavía está en la versión original, la unificación de estilo entre los dos viene después de que definamos el rumbo."
+
+Si te piden ver Matemáticas en el demo del estudiante, muéstrala: tiene una gráfica de barras, una gráfica de línea, un diagrama geométrico y una tabla de datos, todo en SVG embebido. Buen momento para decir: *"las gráficas están hechas en SVG dentro del mismo archivo, sin librerías y sin imágenes externas. Eso importa para el estudiante que abre esto en un gama baja con datos."*
 
 ### Bloque 2 — Panel del instituto (5 minutos)
 
-Abre [panel.html](../panel.html).
+Ya deberías tener [panel.html](../panel.html) abierto de Bloque 1, Paso 10.
 
 **Paso 1 — Vista "Resultados".** Promedio del grupo, área más débil, quién está en riesgo. Pasada rápida, **no te detengas aquí.**
 
@@ -92,29 +102,15 @@ Abre [panel.html](../panel.html).
 
 > "Las 600 repartidas proporcionalmente según los números que ustedes dieron."
 
-**Paso 5 — Clic en "Cargar con IA"** (tiene el badge NUEVO). Este es el momento fuerte.
+**Paso 5 — No hay botón de "Cargar con IA" en esta versión del panel — lo quité a propósito.** Explícalo de pie, sin pantalla:
 
-**Paso 6 — Clic en "Seleccionar archivo".**
+> "Antes tenía aquí un botón de 'Cargar con IA' que simulaba subir un PDF y generar preguntas solo. Lo saqué a propósito, porque daba a entender que es autoservicio, y no lo es ni debería serlo. En la propuesta real, la carga de cuestionarios con IA existe, pero la opero yo: ustedes me mandan los cuadernillos con antelación, el modelo extrae las preguntas de *su* material — no se las inventa — y yo reviso cada lote antes de publicarlo. El paso que importa es la revisión humana, y eso no se resuelve con un botón en una pantalla."
 
-> "Simulo que subo un cuadernillo suyo: 48 páginas, PDF."
+Este es el momento fuerte del bloque, aunque no haya clic que hacer. Que quede claro con la voz, no con la pantalla.
 
-**Paso 7 — Deja correr la animación completa, unos 7 segundos. No hables encima.** Los mensajes van pasando solos: leyendo el documento, extrayendo preguntas, identificando respuestas correctas, generando explicaciones.
+**Paso 6 — Vistas "Cuestionarios" y "Simulacros", rápido.** En Simulacros señala el texto "7 materias · 208 preguntas".
 
-**Paso 8 — Aparece "24 preguntas generadas · listas para revisión".**
-
-> "Fíjense en la palabra **revisión**. No dice 'listas para publicar'."
-
-**Paso 9 — Señala las tres tarjetas de vista previa.**
-
-> "La IA no se inventa las preguntas: las extrae de *su* cuadernillo, el que ustedes redactaron. Lo que sí genera es la explicación pedagógica, y por eso hay un paso de revisión humana obligatorio. Un modelo de lenguaje puede marcar mal una clave. Si publican una respuesta incorrecta a 300 estudiantes, el daño no es técnico, es reputacional."
-
-**Paso 10 — Clic en "Aprobar y agregar al banco".** El contador sube.
-
-> "Y así entra el lote."
-
-**Paso 11 — Vistas "Cuestionarios" y "Simulacros", rápido.**
-
-> "El resto del panel es gestión: qué está activo, quién presentó, la progresión de puntaje entre simulacros."
+> "El resto del panel es gestión: qué está activo, quién presentó, la progresión de puntaje entre simulacros. Y aquí está el 208 del que quiero hablarles al cierre."
 
 ### Bloque 3 — Cierre (2 minutos) y la pregunta
 
@@ -124,9 +120,9 @@ Cállate y deja que respondan. Esta pregunta hace más por tu credibilidad que t
 
 ---
 
-## 3. Los cuatro botones que NO funcionan
+## 3. Los botones que NO funcionan
 
-Varios botones del panel muestran un aviso de *"estará disponible en la versión completa"*: exportar reporte, agregar estudiante, programar simulacro, ver lista de inscritos. **Es intencional.** Si lo tocas sin querer o si ellos lo tocan:
+Varios botones del panel muestran un aviso de *"estará disponible en la versión completa"*: exportar reporte, agregar estudiante, programar simulacro, ver lista de inscritos. En la app del estudiante pasa lo mismo si tocas una materia todavía sin banco (Sociales, Inglés, Biología, Física, Química). **Es intencional.** Si lo tocas sin querer o si ellos lo tocan:
 
 > "Ese está desconectado a propósito. Marqué qué es demo y qué no en vez de fingir que todo funciona."
 
@@ -138,13 +134,13 @@ No pidas disculpas. Es una decisión de diseño y se defiende como tal.
 
 Esta sección es para ti. Cada concepto viene con qué es, por qué lo elegimos, y la frase de una línea para decirlo en voz alta.
 
-### 4.1 Por qué el demo es HTML estático y en memoria
+### 4.1 Por qué el demo no tiene backend real
 
-**Qué es.** [index.html](../index.html) y [panel.html](../panel.html) son dos archivos autocontenidos: el CSS y el JavaScript van adentro, no hay build, no hay `package.json`, no hay servidor. El estado vive en variables de JavaScript. "Guardar" solo incrementa un contador y muestra un aviso. Recargar borra todo. La navegación es un router de juguete que alterna una clase CSS entre secciones.
+**Qué es.** Son dos maquetas estáticas, sin build, sin `package.json`, sin servidor. Ninguna de las dos persiste nada: **[panel.html](../panel.html)** y **[pensar-popayan-app](https://juannico125.github.io/pensar-popayan-app/)** guardan todo el estado en variables de JavaScript, en memoria. "Guardar" en el panel solo incrementa un contador y muestra un aviso. **Recargar cualquiera de las dos páginas borra lo que hiciste y vuelve al estado inicial** — en la app del estudiante, ese estado inicial ya trae una semana de actividad de muestra (racha, errores, XP), para que no arranque en cero cada vez que alguien la recarga. La navegación de ambas es un router de juguete que alterna una clase CSS entre secciones.
 
-**Por qué.** Porque un demo de ventas tiene un solo trabajo: que el cliente vea el producto y decida. Meterle Supabase, autenticación y persistencia a una maqueta cuesta días y no cambia ni un pixel de lo que el cliente evalúa. Y si Pensar dice que no, no perdiste nada.
+**Por qué ninguna tiene backend real.** Porque un demo de ventas tiene un solo trabajo: que el cliente vea el producto y decida. Meterle Supabase, autenticación y persistencia real a una maqueta cuesta días y no cambia ni un pixel de lo que el cliente evalúa. Y si Pensar dice que no, no perdiste nada.
 
-**En una frase:** *"El demo no tiene backend a propósito. Un demo con base de datos me habría costado una semana más y ustedes verían exactamente lo mismo en pantalla."*
+**En una frase:** *"Ninguna de las dos tiene backend, y ninguna guarda nada entre recargas — a propósito, para que la demo sea siempre predecible. En la app del estudiante el punto de partida ya simula una semana de uso, para que se vea cómo se siente un estudiante que vuelve todos los días. En el producto real eso no sería una simulación: sería la base de datos."*
 
 ### 4.2 El producto real: Supabase, Postgres, RLS
 
@@ -190,7 +186,7 @@ Este es el punto donde un cliente técnico puede intentar pillarte. Entiéndelo 
 
 **Tres: validación automática.** Antes de que lo vea un humano: ¿tiene exactamente cuatro opciones? ¿el índice de la correcta está entre 0 y 3? ¿hay preguntas duplicadas contra el banco existente? Lo que falla el chequeo no llega a revisión.
 
-**Cuatro: revisión humana.** Un pedagogo, de ellos o tuyo, aprueba lote por lote. **Este paso no es negociable** y es exactamente lo que el demo muestra con "listas para revisión".
+**Cuatro: revisión humana.** Un pedagogo, de ellos o tuyo, aprueba lote por lote. **Este paso no es negociable.**
 
 **Por qué la revisión humana es obligatoria.** Un modelo de lenguaje puede equivocarse en cuál es la clave correcta, sobre todo en preguntas de inferencia donde dos opciones son defendibles. Si publicas una clave errada, el estudiante estudia mal y el instituto queda mal. El costo de revisar 600 preguntas es una tarde; el costo de una clave mal publicada es un cliente perdido.
 
@@ -202,7 +198,7 @@ Lo importante de ese número es lo que revela: **la IA no es el costo del servic
 
 ### 4.5 Por qué el pipeline es un servicio tuyo y no un botón para ellos
 
-En el demo, "Cargar con IA" se ve como una función que ellos usan solos. En la propuesta real, **es un servicio que tú operas**: ellos te mandan los cuadernillos con antelación, tú corres el pipeline, tú validas, tú entregas el lote cargado.
+El panel **ya no muestra** un botón de "Cargar con IA" — lo tenía en una versión anterior del demo y lo quité a propósito, precisamente para no sugerir que es autoservicio. En la propuesta real, la carga con IA **es un servicio que tú operas**: ellos te mandan los cuadernillos con antelación, tú corres el pipeline, tú validas, tú entregas el lote cargado.
 
 Hay tres razones, en orden de peso.
 
@@ -212,7 +208,7 @@ Hay tres razones, en orden de peso.
 
 **La tercera es modelo de negocio.** Convierte una venta única en un ingreso recurrente semestral, alineado con la dinámica circular que ellos mismos propusieron. Ellos ya piensan en ciclos de 6 meses; el servicio calza con eso.
 
-**En una frase:** *"En la primera versión el cargue con IA lo opero yo: ustedes me mandan los cuadernillos con antelación, yo entrego el lote revisado y cargado. No porque no se pueda automatizar, sino porque el paso que de verdad importa —la revisión pedagógica— no se automatiza, y construir toda la interfaz de revisión antes de saber cómo se comportan sus cuadernillos reales es gastar plata en el orden equivocado."*
+**En una frase:** *"En la primera versión el cargue con IA lo opero yo: ustedes me mandan los cuadernillos con antelación, yo entrego el lote revisado y cargado. No porque no se pueda automatizar, sino porque el paso que de verdad importa —la revisión pedagógica— no se automatiza, y construir toda la interfaz de revisión antes de saber cómo se comportan sus cuadernillos reales es gastar plata en el orden equivocado. Por eso ni siquiera dejé el botón en el demo: no quiero venderles algo que no van a operar ustedes."*
 
 ### 4.6 Rotación semestral: por qué NO se borran las preguntas viejas
 
@@ -228,7 +224,7 @@ Es el mismo principio detrás del versionado, de los borrados suaves y de los li
 
 ### 4.7 Hosting, escala y por qué no es un problema
 
-El frontend son archivos estáticos en Cloudflare Pages. Se sirven desde CDN, cargan rápido incluso con conexión mala, y el plan gratuito cubre este volumen sin despeinarse.
+El frontend son archivos estáticos en Cloudflare Pages (o GitHub Pages, como estos dos demos). Se sirven desde CDN, cargan rápido incluso con conexión mala, y el plan gratuito cubre este volumen sin despeinarse.
 
 El backend es Supabase. El plan Pro cuesta 25 dólares al mes e incluye backups automáticos con recuperación puntual.
 
@@ -282,7 +278,11 @@ Estúdiate estas. Son las que duelen.
 
 ### "¿Esto ya funciona o es solo un mockup?"
 
-> "Es una maqueta, y lo dije al empezar. Nada de lo que ven persiste. Lo que sí funciona hoy, en producción, es la arquitectura que hay detrás de la propuesta —Supabase, Postgres con RLS, estático en Cloudflare— pero para otro instituto, no para ustedes. Construirles el suyo es el trabajo del que estamos hablando."
+> "Es una maqueta, y lo dije al empezar. Nada de lo que ven persiste; si recargo la página vuelve al estado inicial. Lo que sí funciona hoy, en producción, es la arquitectura que hay detrás de la propuesta —Supabase, Postgres con RLS, estático en Cloudflare— pero para otro instituto, no para ustedes. Construirles el suyo es el trabajo del que estamos hablando."
+
+### "¿Por qué el panel se ve distinto a la app del estudiante?"
+
+> "Porque son dos maquetas hechas en momentos distintos. Empecé explorando cómo se vería la experiencia final del estudiante, con más pulido y animación, y el panel todavía no pasó por ese mismo rediseño. Cuando definamos el rumbo con ustedes, unifico los dos bajo un solo sistema de diseño — eso es trabajo de construcción, no de exploración."
 
 ### "¿Tú trabajas con [la competencia]?"
 
@@ -364,25 +364,26 @@ Preguntas que **tú** haces. Anota las respuestas en la reunión.
 8. **¿Recogen autorización de tratamiento de datos en la matrícula?** Ver el punto 4.8.
 9. **¿Tienen dominio? ¿Quién lo paga y a nombre de quién queda?**
 10. **Fecha objetivo.** ¿Para cuándo lo quieren en manos de estudiantes? ¿Está amarrado a algún ciclo?
+11. **¿Cuál de los dos diseños del estudiante prefieren, o quieren un tercero?** Ahora que vieron ambos, esto define si sigues puliendo la línea nueva o si vuelves a la original.
 
 ---
 
 ## 8. Checklist técnico — 15 minutos antes
 
-- [ ] Abrir [index.html](../index.html) y [panel.html](../panel.html) y recorrer **los dos flujos completos** una vez. Si algo falla, te enteras tú, no ellos.
-- [ ] Verificar que las fuentes de Google cargan, porque necesitan internet. Si no hay internet en el sitio, pruébalo antes en modo avión: se ve distinto sin las fuentes, pero funciona.
-- [ ] Correr la animación de "Cargar con IA" una vez, cronometrada. Tienes que saber cuántos segundos vas a estar callado.
+- [ ] Abrir **https://juannico125.github.io/pensar-popayan-app/**. No hace falta incógnito ni limpiar nada: no guarda estado entre recargas, así que siempre arranca con el mismo historial de muestra. Si no hay internet en el sitio, usa el `index.html` local de esa carpeta.
+- [ ] Abrir también [panel.html](../panel.html) en otra pestaña y recorrer los dos flujos completos una vez. Si algo falla, te enteras tú, no ellos.
+- [ ] Verificar que las fuentes de Google cargan en los dos demos, porque necesitan internet. Si no hay internet en el sitio, pruébalo antes en modo avión: se ve distinto sin las fuentes, pero funciona.
 - [ ] Zoom del navegador al 100%. Ventana lo bastante ancha para que el panel no colapse a móvil.
 - [ ] Cerrar pestañas, notificaciones, Slack, todo. Nada de nombres de otros clientes visibles en pantalla. **Especialmente eso.**
 - [ ] Tener este documento abierto en otra ventana o impreso, en la sección 5.
-- [ ] Recargar las páginas antes de empezar: el estado se acumula (los contadores del banco suben) si ya jugaste con ellas.
+- [ ] Recargar **las dos páginas** justo antes de empezar: el estado de ambas se acumula si ya jugaste con ellas (en el panel suben los contadores del banco; en la app del estudiante se mezclan tus clics de prueba con el historial de muestra). Una recarga simple deja las dos en su estado inicial.
 
 ---
 
 ## 9. Si tienes que resumirlo todo en tres ideas
 
-**Uno: honestidad sobre el estado.** Es una maqueta y lo dices tú primero. Lo que vendes es criterio demostrado, no un producto terminado.
+**Uno: honestidad sobre el estado.** Son dos maquetas y lo dices tú primero — ninguna persiste, las dos vuelven a su estado inicial con solo recargar. Lo que vendes es criterio demostrado, no un producto terminado.
 
 **Dos: la torre de selección es RLS, no botones escondidos.** Es tu prueba de que piensas en seguridad de verdad, no en apariencias.
 
-**Tres: la IA no es el producto, la revisión humana es el producto.** Ese es el argumento que justifica que sea un servicio recurrente tuyo y no un botón, y de paso te blinda contra el riesgo de una clave mal publicada.
+**Tres: la IA no es el producto, la revisión humana es el producto.** Por eso ni siquiera dejaste el botón en el panel. Ese es el argumento que justifica que sea un servicio recurrente tuyo y no un autoservicio, y de paso te blinda contra el riesgo de una clave mal publicada.
